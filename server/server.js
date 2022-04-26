@@ -7,7 +7,7 @@ const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
 const app = express();
 app.use(express.static(REACT_BUILD_DIR));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 app.use(cors());
 app.use(express.json());
 
