@@ -1,7 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import EditPostForm from "./EditForm";
-import AddPost from "./AddPost";
 
 function ListContacts() {
   //This needs an empty array, or the whole thing breaks
@@ -15,7 +13,6 @@ function ListContacts() {
         setContacts(contact_list);
       });
   }, []);
-
 
   //PUT stuff
   // grabs the id of the post to be editted
@@ -51,27 +48,22 @@ function ListContacts() {
         } else {
           return (
             <div className="card" key={post.id}>
-              <h2>{post.title}</h2>
-              <img src={post.top_image} className="card_img"></img>
-              <ul className="comic_facts">
+              <h2>{contact.firstname} {contact.lastname}</h2>
+              <ul className="contact_details">
                 <li>
-                  <a href={post.comic_url} target="_blank">
-                    {post.comic_name}
-                  </a>
+                    Email: {contact.email}
                 </li>
-                <li>{post.rating}/10</li>
-                <li>{post.genre}</li>
+                <li>How they like to be paid: {contact.preferred_payment_method}</li>
               </ul>
-              <p>{post.blog_content}</p>
               <br />
 
               <button
                 className="editbuttons"
-                key={post.id}
-                value={post.id}
-                onClick={() => editPost(post)}
+                key={contact.contact_id}
+                value={contact.contact_id}
+                onClick={() => updateContact(contact)}
               >
-                EDIT Post
+                EDIT Contact
               </button>
 
               <button
@@ -80,7 +72,7 @@ function ListContacts() {
                 value={post.id}
                 onClick={() => deletePost(post.id)}
               >
-                DELETE Post
+                DELETE Contact
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
             </div>

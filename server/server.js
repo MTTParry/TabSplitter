@@ -131,38 +131,38 @@ app.post("/db/debts", cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-// delete request
-app.delete("/db/students/:studentId", cors(), async (req, res) => {
-  const studentId = req.params.studentId;
-  //console.log(req.params);
-  await db.query("DELETE FROM students WHERE id=$1", [studentId]);
-  res.status(200).end();
-});
+// // delete request
+// app.delete("/db/contacts/:contact_id", cors(), async (req, res) => {
+//   const studentId = req.params.studentId;
+//   //console.log(req.params);
+//   await db.query("DELETE FROM students WHERE id=$1", [studentId]);
+//   res.status(200).end();
+// });
 
-// Put request - Update request
-app.put("/api/students/:studentId", cors(), async (req, res) => {
-  const studentId = req.params.studentId;
-  const updateStudent = {
-    id: req.body.id,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-  };
-  //console.log(req.params);
-  // UPDATE students SET lastname = 'TestMarch' WHERE id = 1;
-  console.log(studentId);
-  console.log(updateStudent);
-  const query = `UPDATE students SET lastname=$1, firstname=$2 WHERE id = ${studentId} RETURNING *`;
-  console.log(query);
-  const values = [updateStudent.lastname, updateStudent.firstname];
-  try {
-    const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
-    res.send(updated.rows[0]);
-  } catch (e) {
-    console.log(e);
-    return res.status(400).json({ e });
-  }
-});
+// // Put request - Update request
+// app.put("/db/contacts/:contact_Id", cors(), async (req, res) => {
+//   const studentId = req.params.studentId;
+//   const updateStudent = {
+//     id: req.body.id,
+//     firstname: req.body.firstname,
+//     lastname: req.body.lastname,
+//   };
+//   //console.log(req.params);
+//   // UPDATE students SET lastname = 'TestMarch' WHERE id = 1;
+//   console.log(studentId);
+//   console.log(updateStudent);
+//   const query = `UPDATE students SET lastname=$1, firstname=$2 WHERE id = ${studentId} RETURNING *`;
+//   console.log(query);
+//   const values = [updateStudent.lastname, updateStudent.firstname];
+//   try {
+//     const updated = await db.query(query, values);
+//     console.log(updated.rows[0]);
+//     res.send(updated.rows[0]);
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(400).json({ e });
+//   }
+// });
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
