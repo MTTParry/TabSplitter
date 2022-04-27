@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 //GETS
 //contact list
-app.get("/api/contacts", cors(), async (req, res) => {
+app.get("/db/contacts", cors(), async (req, res) => {
   try {
     const { rows: contacts } = await db.query("SELECT * FROM contacts");
     res.send(contacts);
@@ -29,7 +29,7 @@ app.get("/api/contacts", cors(), async (req, res) => {
 });
 
 //contact list
-app.get("/api/bills", cors(), async (req, res) => {
+app.get("/db/bills", cors(), async (req, res) => {
   try {
     const { rows: bills } = await db.query("SELECT * FROM bill_list");
     res.send(bills);
@@ -40,7 +40,7 @@ app.get("/api/bills", cors(), async (req, res) => {
 });
 
 //contact list
-app.get("/api/debts", cors(), async (req, res) => {
+app.get("/db/debts", cors(), async (req, res) => {
   try {
     const { rows: debts } = await db.query("SELECT * FROM debt_list");
     res.send(debts);
@@ -50,23 +50,87 @@ app.get("/api/debts", cors(), async (req, res) => {
   }
 });
 
-//create the POST request
-app.post("/api/students", cors(), async (req, res) => {
-  const newUser = {
+//POSTS
+//contacts
+app.post("/db/contacts", cors(), async (req, res) => {
+  const newContact = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    email: req.body.email,
+    preferred_payment_method: req.body.preferred_payment_method,
   };
-  console.log([newUser.firstname, newUser.lastname]);
+  console.log([newContact]);
   const result = await db.query(
-    "INSERT INTO students(firstname, lastname) VALUES($1, $2) RETURNING *",
-    [newUser.firstname, newUser.lastname]
+    "INSERT INTO contacts (firstname, lastname, email, preferred_payment_method, creationTimeStamp) VALUES($1, $2, $3, $4, current_timestamp) RETURNING *",
+    [
+      newContact.firstname,
+      newContact.lastname,
+      newContact.email,
+      newContact.preferred_payment_method,
+    ]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+//bills
+app.post("/db/bills", cors(), async (req, res) => {
+  const newBill = {
+    transaction_date: req.body.transaction_date,
+    subtotal: req.body.subtotal,
+    tax: req.body.tax,
+    tip: req.body.tip,
+    who_paid: req.body.who_paid,
+    paid_up: req.body.paid_up,
+    notes: req.body.notes,
+  };
+  console.log([newBill]);
+  const result = await db.query(
+    "INSERT INTO bill_list (transaction_date, subtotal, tax, tip, who_paid, paid_up, notes, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, current_timestamp) RETURNING *",
+    [
+      newBill.transaction_date,
+      newBill.subtotal,
+      newBill.tax,
+      newBill.tip,
+      newBill.who_paid,
+      newBill.paid_up,
+      newBill.notes,
+    ]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+//debts
+app.post("/db/debts", cors(), async (req, res) => {
+  const newDebt = {
+    which_bill: req.body.which_bill,
+    how_much: req.body.how_much,
+    who_paid: req.body.who_paid,
+    who_owes: req.body.who_owes,
+    debt_paid_up: req.body.debt_paid_up,
+    notes: req.body.notes,
+    subtotal: req.body.subtotal,
+  };
+  console.log([newDebt]);
+  const result = await db.query(
+    "INSERT INTO debt_list (which_bill, how_much, who_paid, who_owes, debt_paid_up, notes, subtotal, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, current_timestamp) RETURNING *",
+    [
+      newDebt.which_bill,
+      newDebt.how_much,
+      newDebt.who_paid,
+      newDebt.who_owes,
+      newDebt.debt_paid_up,
+      newDebt.notes,
+      newDebt.subtotal,
+    ]
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);
 });
 
 // delete request
-app.delete("/api/students/:studentId", cors(), async (req, res) => {
+app.delete("/db/students/:studentId", cors(), async (req, res) => {
   const studentId = req.params.studentId;
   //console.log(req.params);
   await db.query("DELETE FROM students WHERE id=$1", [studentId]);
