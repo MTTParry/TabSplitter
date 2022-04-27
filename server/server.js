@@ -20,7 +20,9 @@ app.get("/", (req, res) => {
 //contact list
 app.get("/db/contacts", cors(), async (req, res) => {
   try {
-    const { rows: contacts } = await db.query("SELECT * FROM contacts");
+    const { rows: contacts } = await db.query(
+      "SELECT * FROM contacts ORDER BY contact_id"
+    );
     res.send(contacts);
   } catch (e) {
     console.log(e);
