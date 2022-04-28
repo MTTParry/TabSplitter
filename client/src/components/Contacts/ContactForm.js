@@ -7,7 +7,8 @@ const emptyContact = {
   preferred_payment_method: "",
 };
 
-const AddContact = (props) => {
+const ContactForm = (props) => {
+  //An initial student if there is one in props
   const { initialContact = { emptyContact } } = props;
 
   // Initial State
@@ -21,43 +22,46 @@ const AddContact = (props) => {
   };
 
   //A function to handle the POST request
-  const postContact = (newContact) => {
+  const postNewContact = (newContact) => {
     return fetch("http://localhost:5005/db/contacts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPost),
+      body: JSON.stringify(newContact),
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("From the contact ", data);
+        console.log("From the contact add ", data);
         // props.addPost(data);
       });
   };
 
   //A function to handle the PUT request
-  const updateContact = async (existingContact) => {
-    return fetch(`http://localhost:5005/db/contacts/${existingContact.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(existingPost),
-    })
+  const updateContactInfo = async (existingContact) => {
+    return fetch(
+      `http://localhost:5005/db/contacts/${existingContact.contact_id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(existingContact),
+      }
+    )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("From the post ", data);
-        props.updatePost(data);
+        console.log("The updated contact info: ", data);
+        props.updateContact(data);
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (contact.id) {
-      updateContact(contact);
+    if (contact.contact_id) {
+      updateContactInfo(contact);
     } else {
-      postContact(contact);
+      postNewContact(contact);
     }
   };
 
@@ -65,60 +69,56 @@ const AddContact = (props) => {
     <form onSubmit={handleSubmit}>
       <h3>New Contact</h3>
       <fieldset>
-        <label>First Name</label>
-        <br />
+        <label>First Name: </label>
         <input
           type="text"
           id="add-contact-firstname"
-          placeholder="First name"
+          className="contact_inputs"
+          placeholder="Tab"
           required
-          name="contact-firstname"
           value={contact.firstname}
           onChange={handleChange}
         />
         <br />
-        <label>Last Name</label>
-        <br />
+
+        <label>Last Name: </label>
         <input
           type="text"
           id="add-contact-lastname"
-          placeholder="Last name"
-          className="contact-inputs"
-          required
+          className="contact_inputs"
+          placeholder="Splitter"
           value={contact.lastname}
           onChange={handleChange}
         />
         <br />
-        <label>Email</label>
-        <br />
+        <label>Email: </label>
         <input
           type="text"
           id="add-contact-email"
-          placeholder="Name@gmail.com"
-          required
           className="contact-inputs"
+          placeholder="name@email.com"
+          required
           value={contact.email}
           onChange={handleChange}
         />
         <br />
-        <label>How this person prefers to be paid</label>
-        <br />
+        <label>How this person likes to be paid: </label>
         <textarea
           rows="5"
           className="contact-inputs"
           type="text"
-          id="add-contact-preferred_payment_method"
-          placeholder="Ex: Venmo (@name)"
+          id="add-contact-payment-info"
+          placeholder="Venmo (@name), Cash, CashApp (@name)"
           required
-          name="preferred_payment_method"
           value={contact.preferred_payment_method}
           onChange={handleChange}
         />
-        <br />
       </fieldset>
-      <button type="submit">{!post.id ? "Add Contact" : "Save Changes"}</button>
+      <button type="submit">
+        {!contact.contact_id ? "Add Contact" : "Save Changes"}
+      </button>
     </form>
   );
 };
 
-export default AddContact;
+export default ContactForm;

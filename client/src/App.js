@@ -1,13 +1,13 @@
 import "./App.css";
-import ListContacts from "./components/Contacts/ContactsList";
-import AddContact from "./components/Contacts/AddContactsForm";
+import React from "react";
+import ContactForm from "./components/Contacts/ContactForm";
+import ContactList from "./components/Contacts/ContactList";
 
 function App() {
   return (
     <div className="App">
-      TabSplitter
-      <ListContacts />
-      <AddContact />
+      <h1>TabSplitter</h1>
+      <ContactList />
     </div>
   );
 }
