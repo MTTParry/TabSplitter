@@ -132,13 +132,13 @@ app.post("/db/contacts", cors(), async (req, res) => {
 //   res.json(result.rows[0]);
 // });
 
-// // // delete request
-// // app.delete("/db/contacts/:contact_id", cors(), async (req, res) => {
-// //   const studentId = req.params.studentId;
-// //   //console.log(req.params);
-// //   await db.query("DELETE FROM students WHERE id=$1", [studentId]);
-// //   res.status(200).end();
-// // });
+// delete request
+app.delete("/db/contacts/:contact_id", cors(), async (req, res) => {
+  const contactId = req.params.contact_id;
+  //console.log(req.params);
+  await db.query("DELETE FROM contacts WHERE contact_id=$1", [contactId]);
+  res.status(200).end();
+});
 
 // // // Put request - Update request
 // // app.put("/db/contacts/:contact_Id", cors(), async (req, res) => {
