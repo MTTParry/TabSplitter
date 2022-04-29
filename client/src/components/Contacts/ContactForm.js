@@ -9,7 +9,7 @@ const emptyContact = {
 
 const ContactForm = (props) => {
   //An initial student if there is one in props
-  const { initialContact = { emptyContact } } = props;
+  const { initialContact = { ...emptyContact } } = props;
 
   // Initial State
   const [contact, setContact] = useState(initialContact);
@@ -19,6 +19,7 @@ const ContactForm = (props) => {
     const name = event.target.name;
     const value = event.target.value;
     setContact((contact) => ({ ...contact, [name]: value }));
+    //console.log("client side", contact);
   };
 
   //A function to handle the POST request
@@ -78,6 +79,7 @@ const ContactForm = (props) => {
           required
           value={contact.firstname}
           onChange={handleChange}
+          name="firstname"
         />
         <br />
 
@@ -89,12 +91,14 @@ const ContactForm = (props) => {
           placeholder="Splitter"
           value={contact.lastname}
           onChange={handleChange}
+          name="lastname"
         />
         <br />
         <label>Email: </label>
         <input
           type="text"
           id="add-contact-email"
+          name="email"
           className="contact-inputs"
           placeholder="name@email.com"
           required
@@ -106,6 +110,7 @@ const ContactForm = (props) => {
         <textarea
           rows="5"
           className="contact-inputs"
+          name="preferred_payment_method"
           type="text"
           id="add-contact-payment-info"
           placeholder="Venmo (@name), Cash, CashApp (@name)"

@@ -56,24 +56,29 @@ app.get("/db/debts", cors(), async (req, res) => {
 //POSTS
 //contacts
 app.post("/db/contacts", cors(), async (req, res) => {
-  const newContact = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    preferred_payment_method: req.body.preferred_payment_method,
-  };
-  console.log([newContact]);
-  const result = await db.query(
-    "INSERT INTO contacts (first_name, last_name, email, preferred_payment_method, creation_TimeStamp) VALUES($1, $2, $3, $4, current_timestamp) RETURNING *",
-    [
-      newContact.firstname,
-      newContact.lastname,
-      newContact.email,
-      newContact.preferred_payment_method,
-    ]
-  );
-  console.log(result.rows[0]);
-  res.json(result.rows[0]);
+  console.log("Start server POST request...");
+  try {
+    const newContact = {
+      first_name: req.body.firstname,
+      last_name: req.body.lastname,
+      email: req.body.email,
+      preferred_payment_method: req.body.preferred_payment_method,
+    };
+    console.log([newContact]);
+    const result = await db.query(
+      "INSERT INTO contacts (first_name, last_name, email, preferred_payment_method, creation_TimeStamp) VALUES($1, $2, $3, $4, current_timestamp) RETURNING *",
+      [
+        newContact.first_name,
+        newContact.last_name,
+        newContact.email,
+        newContact.preferred_payment_method,
+      ]
+    );
+    console.log(result.rows[0]);
+    res.json(result.rows[0]);
+  } catch (e) {
+    console.log(e.message);
+  }
 });
 
 // //bills

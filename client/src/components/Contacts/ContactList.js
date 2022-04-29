@@ -79,10 +79,11 @@ function ContactList() {
                 {contact.first_name} {contact.last_name}
               </h2>
               <ul className="contact-info">
-                <li>Email: {contact.email}</li>
                 <li>
-                  How this person likes to be paid back:{" "}
-                  {contact.preferred_payment_method}
+                  Email: <b>{contact.email}</b>
+                </li>
+                <li>
+                  How to pay them: <b>{contact.preferred_payment_method}</b>
                 </li>
               </ul>
 
@@ -90,18 +91,18 @@ function ContactList() {
                 className="editbuttons"
                 key={contact.contact_id}
                 value={contact.contact_id}
-                onClick={() => editContact(contact)}
+                onClick={() => editContact(contact.contact_id)}
               >
-                EDIT Contact
+                EDIT {contact.first_name}
               </button>
 
               <button
                 className="deletebuttons"
-                key={contact.contact_id}
+                key="delete_${contact.contact_id}"
                 value={contact.contact_id}
                 onClick={() => deleteContact(contact.contact_id)}
               >
-                DELETE Post
+                DELETE {contact.first_name}
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
               <hr />

@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <h1>TabSplitter</h1>
       <ContactList />
+      <ContactForm />
     </div>
   );
 }
