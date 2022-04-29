@@ -66,7 +66,7 @@ function ContactList() {
   };
 
   return (
-    <div className="ts_lists">
+    <div className="lists">
       <h2> Contacts List </h2>
 
       {contacts.map((contact) => {
