@@ -89,8 +89,7 @@ function BillList() {
           return (
             <div className="card" key={bill.bill_id}>
               <h2>
-                On {bill.transaction_date}, a bill of ${bill.full_total} was
-                paid.
+                On {bill.transaction_date}, {bill.first_name} {bill.last_name} paid a bill of ${bill.full_total}.
               </h2>
               <ul className="bill-info">
                 <li>

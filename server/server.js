@@ -31,10 +31,12 @@ app.get("/db/contacts", cors(), async (req, res) => {
   }
 });
 
-//contact list
+//bill list
 app.get("/db/bills", cors(), async (req, res) => {
   try {
-    const { rows: bills } = await db.query("SELECT * FROM bill_list");
+    const { rows: bills } = await db.query(
+      "SELECT * FROM bill_list FULL OUTER JOIN contacts ON bill_list.who_paid = contacts.contact_id ORDER BY bill_list.transaction_date"
+    );
     res.send(bills);
   } catch (e) {
     console.log(e);
