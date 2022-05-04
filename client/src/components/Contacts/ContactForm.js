@@ -12,9 +12,7 @@ const ContactForm = (props) => {
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(emptyContact);
-
-
+  const [contact, setContact] = useState(initialContact || emptyContact);
   
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {

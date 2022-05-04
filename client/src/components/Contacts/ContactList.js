@@ -43,10 +43,9 @@ function ContactList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editContact = (contact) => {
-    const editId = contact.contact_id;
-    console.log(editId);
-    setEditContactById(editId);
+  const editContact = (contact_id) => {
+    console.log(contact_id);
+    setEditContactById(contact_id);
   };
 
   const updateContact = async (updatedContactInfo) => {
@@ -64,14 +63,20 @@ function ContactList() {
 
     setEditContactById(null);
   };
-
+  console.log("editing contact by id", editContactById);
   return (
     <div className="lists">
       <h2> Contacts List </h2>
 
       {contacts.map((contact) => {
         if (contact.contact_id === editContactById) {
-          return <ContactForm initialPost={contact} savePost={updateContact} />;
+          return (
+            <ContactForm
+              initialContact={contact}
+              savePost={updateContact}
+              key={contact.contact_id}
+            />
+          );
         } else {
           return (
             <div className="card" key={contact.contact_id}>
@@ -89,7 +94,7 @@ function ContactList() {
 
               <button
                 className="editbuttons"
-                key={contact.contact_id}
+                key="edit_${contact.contact_id}"
                 value={contact.contact_id}
                 onClick={() => editContact(contact.contact_id)}
               >
