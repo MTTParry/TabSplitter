@@ -11,7 +11,7 @@ const emptyBill = {
   tip_total: null,
   who_paid: null,
   paid_up: null,
-  notes: "",
+  bill_notes: "",
   full_total: null,
 };
 
@@ -89,8 +89,9 @@ function BillList() {
           return (
             <div className="card" key={bill.bill_id}>
               <h2>
-                On {bill.transaction_date}, {bill.first_name} {bill.last_name} paid a bill of ${bill.full_total}.
+                Bill ID #{bill.bill_id}
               </h2>
+              <p>On {bill.transaction_date}, {bill.first_name} {bill.last_name} paid a bill of ${bill.full_total}.</p>
               <ul className="bill-info">
                 <li>
                   Subtotal: <b>{bill.subtotal}</b>
@@ -106,10 +107,10 @@ function BillList() {
                 </li>
                 <li>
                   Has this person been fully paid back?{" "}
-                  <b>{bill.paid_up.toString()}</b>
+                  <b>{bill.paid_up}</b>
                 </li>
                 <li>
-                  Notes: <b>{bill.notes}</b>
+                  Notes: <b>{bill.bill_notes}</b>
                 </li>
               </ul>
 

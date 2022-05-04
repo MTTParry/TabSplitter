@@ -1,19 +1,21 @@
 import { useState } from "react";
 
 const emptyContact = {
-  firstname: "",
-  lastname: "",
+  first_name: "",
+  last_name: "",
   email: "",
-  preferred_payment_method: "",
+  preferred_payment_method: ""
 };
 
 const ContactForm = (props) => {
   //An initial student if there is one in props
-  const { initialContact = { ...emptyContact } } = props;
+  const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(initialContact);
+  const [contact, setContact] = useState(emptyContact);
 
+
+  
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
@@ -59,6 +61,8 @@ const ContactForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log({ initialContact });
+    console.log(contact.contact_id);
     if (contact.contact_id) {
       updateContactInfo(contact);
     } else {
@@ -77,9 +81,9 @@ const ContactForm = (props) => {
           className="contact_inputs"
           placeholder="Tab"
           required
-          value={contact.firstname}
+          value={contact.first_name}
           onChange={handleChange}
-          name="firstname"
+          name="first_name"
         />
         <br />
 
@@ -89,9 +93,9 @@ const ContactForm = (props) => {
           id="add-contact-lastname"
           className="contact_inputs"
           placeholder="Splitter"
-          value={contact.lastname}
+          value={contact.last_name}
           onChange={handleChange}
-          name="lastname"
+          name="last_name"
         />
         <br />
         <label>Email: </label>

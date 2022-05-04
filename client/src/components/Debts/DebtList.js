@@ -3,42 +3,39 @@ import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
 const emptyDebt = {
-  transaction_date: "",
+  which_bill: null,
   subtotal: null,
-  tax_rate: null,
-  tax_amount: null,
-  tip_rate: null,
-  tip_total: null,
+  how_much: null,
   who_paid: null,
-  paid_up: null,
-  notes: "",
-  full_total: null,
+  who_owes: null,
+  debt_paid_up: null,
+  notes: ""
 };
 
 function DebtList() {
   //This needs an empty array, or the whole thing breaks
-  const [bills, setBills] = useState([]);
-  const [editBillById, setEditBillById] = useState(null);
+  const [debts, setDebts] = useState([]);
+  const [editDebtById, setEditDebtById] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/db/bills")
+    fetch("http://localhost:5005/db/debts")
       .then((response) => response.json())
-      .then((billData) => {
-        setBills(billData);
+      .then((debtsData) => {
+        setDebts(debtsData);
       });
   }, []);
 
   //  const deleteP Contacts
-  const deleteBill = async (bill_id) => {
+  const deleteDebt = async (debt_id) => {
     try {
       const deleteResponse = await fetch(
-        `http://localhost:5005/db/bills/${bill_id}`,
+        `http://localhost:5005/db/debts/${debt_id}`,
         {
           method: "DELETE",
         }
       );
       if (deleteResponse.status === 200) {
-        setBills(bills.filter((bill) => bill.bill_id !== bill_id));
+        setDebts(debts.filter((debt) => debt.debt_id !== debt_id));
       }
     } catch (error) {
       console.error(error);
@@ -47,89 +44,83 @@ function DebtList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editBill = (bill) => {
-    const editId = bill.bill_id;
-    console.log(editId);
-    setEditBillById(editId);
+  const editDebt = (debt) => {
+    const editById = debt.debt_id;
+    console.log(editById);
+    setEditDebtById(editById);
   };
 
-  const updateBill = async (updatedBillInfo) => {
-    setBills((bills) => {
-      const newListBills = [];
-      for (let bill of bills) {
-        if (bill.bill_id === updatedBillInfo.bill_id) {
-          newListBills.push(updatedBillInfo);
+  const updateDebt = async (updatedDebtInfo) => {
+    setDebts((debts) => {
+      const newListDebts = [];
+      for (let debt of debts) {
+        if (debt.debt_id === updatedDebtInfo.debt_id) {
+          newListDebts.push(updatedDebtInfo);
         } else {
-          newListBills.push(bill);
+          newListDebts.push(debt);
         }
       }
-      return newListBills;
+      return newListDebts;
     });
 
-    setEditBillById(null);
+    setEditDebtById(null);
   };
 
   return (
     <div className="lists">
-      <h2> Bill List </h2>
+      <h2>List of Debts</h2>
       <ul className="Instructions">
-        This is a list of each time a person covered the bill. This includes:
-        <li>the subtotal</li>
-        <li>tax total</li>
-        <li>the tip (percentage)</li>
-        <li>when the transaction happened</li>
-        <li>who paid for it</li>
-        <li>have they been paid back?</li>
+        This is a list of each debt owed, based on bills that have been paid. This includes:
+        <li>the subtotal of the debt</li>
+        <li>the total owed (with tax + tip)</li>
+        <li>who is owed</li>
+        <li>who owes</li>
+        <li>how to best pay back the person owed.</li>
       </ul>
 
-      {bills.map((bill) => {
-        if (bill.bill_id === editBillById) {
-          return <BillForm initialPost={bill} savePost={updateBill} />;
+      {debts.map((debt) => {
+        if (debt.debt_id === editDebtById) {
+          return <DebtForm initialPost={debt} savePost={updateDebt} />;
         } else {
           return (
-            <div className="card" key={bill.bill_id}>
+            <div className="card" key={debt.debt_id}>
               <h2>
-                On {bill.transaction_date}, a bill of {bill.full_total} was
-                paid.
+                {debt.first_name} is owed {debt.how_much}, from bill id #{debt.bill_id} on {debt.transaction_date}. 
               </h2>
+              <p>How they would like to be paid back: <b>{debt.preferred_payment_method}</b></p>
               <ul className="bill-info">
                 <li>
-                  Subtotal: <b>{bill.subtotal}</b>
+                  Subtotal: <b>{debt.subtotal}</b>
                 </li>
                 <li>
-                  Tax Amount ({bill.tax_rate * 100}%): {bill.tax_total}
-                </li>
-                <li>
-                  Tip Amount ({bill.tip_rate * 100}%): <b>{bill.tip_total}</b>
-                </li>
-                <li>
-                  Total: <b>{bill.full_total}</b>
+                  Total debt: ({debt.how_much})
                 </li>
                 <li>
                   Has this person been fully paid back?{" "}
-                  <b>{bill.paid_up.toString()}</b>
+                  <b>{debt.debt_paid_up}</b>
                 </li>
                 <li>
-                  Notes: <b>{bill.notes}</b>
+                  Notes: <b>{debt.debt_notes}</b>
+                  <br /> {debt.bill_notes}
                 </li>
               </ul>
 
               <button
                 className="editbuttons"
-                key="edit_${bill.bill_id}"
-                value={bill.bill_id}
-                onClick={() => editBill(bill.bill_id)}
+                key="edit_${debt.debt_id}"
+                value={debt.debt_id}
+                onClick={() => editDebt(debt.debt_id)}
               >
-                EDIT bill
+                EDIT Debt
               </button>
 
               <button
                 className="deletebuttons"
-                key="delete_${bill.bill_id}"
-                value={bill.bill_id}
-                onClick={() => deleteBill(bill.bill_id)}
+                key="delete_${debt.debt_id}"
+                value={debt.debt_id}
+                onClick={() => deleteDebt(debt.debt_id)}
               >
-                DELETE bill
+                DELETE Debt
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
               <hr />

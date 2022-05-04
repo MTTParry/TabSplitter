@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ContactDropDown from "../DropDowns/ContactDropList";
+
 
 const emptyBill = {
   transaction_date: "",
@@ -82,7 +84,7 @@ const BillForm = (props) => {
           required
           value={bill.firstname}
           onChange={handleChange}
-          name="bill_subtotal"
+          name="subtotal"
         />
         <br />
         <label>Tax Amount: $</label>
@@ -93,14 +95,14 @@ const BillForm = (props) => {
           placeholder="0"
           value={bill.tax_total}
           onChange={handleChange}
-          name="bill-tax-amount"
+          name="tax_amount"
         />
         <br />
         <label>Tip (percentage): </label>
         <input
           type="number"
           id="add-bill-tip-rate"
-          name="bill-tip-rate"
+          name="tip_rate"
           className="bill_inputs"
           placeholder="0"
           required
@@ -113,7 +115,7 @@ const BillForm = (props) => {
         <input
           type="date"
           id="add-bill-date"
-          name="bill-date"
+          name="transaction_date"
           className="bill_inputs"
           placeholder="0"
           required
@@ -125,7 +127,7 @@ const BillForm = (props) => {
         <input
           type="number"
           id="add-bill-payer"
-          name="bill-who-paid"
+          name="who_paid"
           className="bill_inputs"
           placeholder="0"
           required
@@ -137,22 +139,33 @@ const BillForm = (props) => {
         <input
           type="radio"
           id="add-bill-paid-status"
-          name="bill-paid-status"
+          name="paid_up"
           className="bill_inputs"
           required
           value={bill.paid_up}
           onChange={handleChange}
-        /> <label>No</label>
+        />{" "}
+        <label>No</label>
         <input
           type="radio"
           id="add-bill-paid-status"
-          name="bill-paid-status"
+          name="paid_up"
           className="bill_inputs"
           required
           value={bill.paid_up}
           onChange={handleChange}
-        /> <label>Yes</label>
+        />{" "}
+        <label>Yes</label>
         <br />
+        <label>Notes:</label>
+        <input 
+          type="text"
+          id="add-bill-notes"
+          name="bill_notes"
+          className="bill_inputs"
+          value={bill.bill_notes}
+          onChange={handleChange}
+        />
       </fieldset>
       <button type="submit">
         {!bill.bill_id ? "Add Bill" : "Save Changes"}
