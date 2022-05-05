@@ -97,6 +97,8 @@ const BillForm = (props) => {
           name="tax_amount"
         />
         <br />
+        Tax Rate: {Math.round(bill.tax_amount / bill.subtotal * 1000000)/10000}%
+        <br />
         <label>Tip (percentage): </label>
         <input
           type="number"
@@ -110,6 +112,10 @@ const BillForm = (props) => {
         />
         %
         <br />
+        Tip Amount: {(bill.subtotal * bill.tip_rate) / 100}
+        <br />
+        Full Amount: [calculations to come]
+        <br />
         <label>When: </label>
         <input
           type="date"
@@ -119,6 +125,18 @@ const BillForm = (props) => {
           placeholder="0"
           required
           value={bill.transaction_date}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Where: </label>
+        <input
+          type="text"
+          id="add-bill-location"
+          name="location"
+          className="bill_inputs"
+          placeholder="Starbucks"
+          required
+          value={bill.location}
           onChange={handleChange}
         />
         <br />
