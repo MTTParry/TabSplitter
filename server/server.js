@@ -31,7 +31,18 @@ app.get("/db/contacts", cors(), async (req, res) => {
   }
 });
 
-// BILL LIST
+//simple bills
+app.get("/db/bills", cors(), async (req, res) => {
+  try {
+    const { rows: bills } = await db.query("SELECT * FROM bill_list");
+    res.send(bills);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
+  }
+});
+
+// FULL BILL LIST
 // for the get, the bill table is joined with the contacts for display purposes
 // this way the list can show "<this person (contact.firstname)> paid <this much(bill_list.full_total)>"
 app.get("/db/bills_full", cors(), async (req, res) => {
@@ -44,7 +55,7 @@ app.get("/db/bills_full", cors(), async (req, res) => {
     //for each bill
     for (bill of bills) {
       const { rows: debts } = await db.query(
-        //get all from debt_list
+        //get all from debt_list items for each bill
         //debt_list has been joined with contacts, by who_owes, where debt_list bill is THAT bill
         "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id WHERE debt_list.which_bill = $1;",
         [bill.bill_id]
@@ -78,6 +89,39 @@ app.get("/db/debts", cors(), async (req, res) => {
     return res.status(400).json({ e });
   }
 });
+
+// app.get("/db/debts_full", cors(), async (req, res) => {
+//   try {
+//     const { rows: debts } = await db.query(
+//       // get everything from the bill_list table
+//       "SELECT * FROM debt_list ORDER BY creationtimestamp;"
+//     );
+
+//     //for each debt
+//     for (debt of debts) {
+//       const { rows: bill } = await db.query(
+//         //get all from debt_list items for each bill
+//         //debt_list has been joined with contacts, by who_owes, where debt_list bill is THAT bill
+//         "SELECT * FROM bill_list JOIN contacts ON bill_list.who_owes = contacts.contact_id WHERE debt_list.which_bill = $1;",
+//         [bill.bill_id]
+//       );
+//       bill.debts = debts;
+
+//       const { rows: payees } = await db.query(
+//         //Gets all the contact info for the bill payee
+//         "SELECT * FROM contacts WHERE contact_id = $1;",
+//         [bill.who_paid]
+//       );
+//       bill.payee = payees[0];
+//     }
+
+//     res.send(bills);
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(400).json({ e });
+//   }
+// });
+
 
 //POSTS
 //contacts

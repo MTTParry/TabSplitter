@@ -9,7 +9,7 @@ const emptyDebt = {
   who_paid: null,
   who_owes: null,
   debt_paid_up: null,
-  notes: ""
+  notes: "",
 };
 
 function DebtList() {
@@ -70,7 +70,8 @@ function DebtList() {
     <div className="lists">
       <h2>List of Debts</h2>
       <ul className="Instructions">
-        This is a list of each debt owed, based on bills that have been paid. This includes:
+        This is a list of each debt owed, based on bills that have been paid.
+        This includes:
         <li>the subtotal of the debt</li>
         <li>the total owed (with tax + tip)</li>
         <li>who is owed</li>
@@ -85,19 +86,21 @@ function DebtList() {
           return (
             <div className="card" key={debt.debt_id}>
               <h2>
-                {debt.first_name} is owed {debt.how_much}, from bill id #{debt.bill_id} on {debt.transaction_date}. 
+                {debt.first_name} is owed {debt.how_much}, from bill id #
+                {debt.bill_id} on {debt.transaction_date}.
               </h2>
-              <p>How they would like to be paid back: <b>{debt.preferred_payment_method}</b></p>
+              <p>
+                How they would like to be paid back:{" "}
+                <b>{debt.preferred_payment_method}</b>
+              </p>
               <ul className="bill-info">
                 <li>
                   Subtotal: <b>{debt.subtotal}</b>
                 </li>
-                <li>
-                  Total debt: ({debt.how_much})
-                </li>
+                <li>Total debt: ({debt.how_much})</li>
                 <li>
                   Has this person been fully paid back?{" "}
-                  <b>{debt.debt_paid_up}</b>
+                  <b>{debt.debt_paid_up.toString()}</b>
                 </li>
                 <li>
                   Notes: <b>{debt.debt_notes}</b>
