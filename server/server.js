@@ -34,11 +34,31 @@ app.get("/db/contacts", cors(), async (req, res) => {
 // BILL LIST
 // for the get, the bill table is joined with the contacts for display purposes
 // this way the list can show "<this person (contact.firstname)> paid <this much(bill_list.full_total)>"
-app.get("/db/bills", cors(), async (req, res) => {
+app.get("/db/bills_full", cors(), async (req, res) => {
   try {
     const { rows: bills } = await db.query(
-      "SELECT * FROM bill_list FULL OUTER JOIN contacts ON bill_list.who_paid = contacts.contact_id ORDER BY bill_list.transaction_date"
+      // get everything from the bill_list table
+      "SELECT * FROM bill_list ORDER BY transaction_date;"
     );
+
+    //for each bill
+    for (bill of bills) {
+      const { rows: debts } = await db.query(
+        //get all from debt_list
+        //debt_list has been joined with contacts, by who_owes, where debt_list bill is THAT bill
+        "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id WHERE debt_list.which_bill = $1;",
+        [bill.bill_id]
+      );
+      bill.debts = debts;
+
+      const { rows: payees } = await db.query(
+        //Gets all the contact info for the bill payee
+        "SELECT * FROM contacts WHERE contact_id = $1;",
+        [bill.who_paid]
+      );
+      bill.payee = payees[0];
+    }
+
     res.send(bills);
   } catch (e) {
     console.log(e);
