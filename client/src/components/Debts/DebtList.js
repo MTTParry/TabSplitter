@@ -6,7 +6,6 @@ const emptyDebt = {
   which_bill: null,
   subtotal: null,
   how_much: null,
-  who_paid: null,
   who_owes: null,
   debt_paid_up: null,
   notes: "",

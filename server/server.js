@@ -81,7 +81,7 @@ app.get("/db/bills_full", cors(), async (req, res) => {
 app.get("/db/debts", cors(), async (req, res) => {
   try {
     const { rows: debts } = await db.query(
-      "SELECT * FROM debt_list FULL OUTER JOIN contacts ON debt_list.who_paid = contacts.contact_id FULL OUTER JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
+      "SELECT * FROM debt_list FULL OUTER JOIN contacts ON debt_list.who_owes = contacts.contact_id FULL OUTER JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
     );
     res.send(debts);
   } catch (e) {
@@ -121,7 +121,6 @@ app.get("/db/debts", cors(), async (req, res) => {
 //     return res.status(400).json({ e });
 //   }
 // });
-
 
 //POSTS
 //contacts
@@ -184,7 +183,6 @@ app.post("/db/debts", cors(), async (req, res) => {
   const newDebt = {
     which_bill: req.body.which_bill,
     how_much: req.body.how_much,
-    who_paid: req.body.who_paid,
     who_owes: req.body.who_owes,
     debt_paid_up: req.body.debt_paid_up,
     debt_notes: req.body.debt_notes,
@@ -192,15 +190,14 @@ app.post("/db/debts", cors(), async (req, res) => {
   };
   console.log([newDebt]);
   const result = await db.query(
-    "INSERT INTO debt_list (which_bill, how_much, who_paid, who_owes, debt_paid_up, debt_notes, subtotal, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, current_timestamp) RETURNING *",
+    "INSERT INTO debt_list (which_bill, how_much, who_owes, debt_paid_up, debt_notes, subtotal, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, current_timestamp) RETURNING *",
     [
       newDebt.which_bill,
       newDebt.how_much,
-      newDebt.who_paid,
       newDebt.who_owes,
       newDebt.debt_paid_up,
       newDebt.debt_notes,
-      newDebt.subtotal
+      newDebt.subtotal,
     ]
   );
   console.log(result.rows[0]);

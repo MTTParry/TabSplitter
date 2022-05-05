@@ -1,14 +1,14 @@
 import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
+import BillDropDown from "../DropDowns/BillDropList";
 
 const emptyDebt = {
   which_bill: null,
   subtotal: null,
   how_much: null,
-  who_paid: null,
   who_owes: null,
   debt_paid_up: null,
-  notes: "",
+  notes: ""
 };
 
 const DebtForm = (props) => {
@@ -94,24 +94,11 @@ const DebtForm = (props) => {
           name="how_much"
         />
         <br />
-        <ContactDropDown
-          label="Who Paid: "
-          name="who_paid"
-          id="add-debt-who-paid"
-          className="debt_inputs"
-          placeholder="0"
-          required
-          value={debt.who_paid}
-          handleChange={handleChange}
-        />
-        <br />
-        <label>Which Bill: </label>
-        <input
-          type="integer"
+        <BillDropDown
+          label="Which Bill:"
           id="add-debt-which-bill"
           name="which_bill"
           className="debt_inputs"
-          placeholder="0"
           required
           value={debt.which_bill}
           onChange={handleChange}
@@ -122,7 +109,6 @@ const DebtForm = (props) => {
           id="add-debt-who-owes"
           name="who_owes"
           className="debt_inputs"
-          placeholder="0"
           required
           value={debt.who_owes}
           handleChange={handleChange}
