@@ -4,7 +4,7 @@ const emptyContact = {
   first_name: "",
   last_name: "",
   email: "",
-  preferred_payment_method: ""
+  preferred_payment_method: "",
 };
 
 const ContactForm = (props) => {
@@ -13,7 +13,7 @@ const ContactForm = (props) => {
 
   // Initial State
   const [contact, setContact] = useState(initialContact || emptyContact);
-  
+
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
@@ -70,7 +70,7 @@ const ContactForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>New Contact</h3>
+      <h3>{!contact.contact_id ? "Add New Contact" : "Edit Contact"}</h3>
       <fieldset>
         <label>First Name: </label>
         <input

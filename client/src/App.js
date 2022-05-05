@@ -11,9 +11,11 @@ function App() {
   return (
     <div className="App">
       <h1>TabSplitter</h1>
+      <hr />
+      <hr />
+      <DebtList />
+      <DebtForm />
       <ContactList />
-      <ContactForm />
-
     </div>
   );
 }

@@ -23,7 +23,7 @@ const DebtForm = (props) => {
     const name = event.target.name;
     const value = event.target.value;
     setDebt((debt) => ({ ...debt, [name]: value }));
-    console.log("client side", name, value);
+    console.log("client side: " + name + ", value: " + value);
   };
 
   //A function to handle the POST request
@@ -69,7 +69,7 @@ const DebtForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>New Debt</h3>
+      <h3>{!debt.debt_id ? "New Debt" : "Edit Debt"}</h3>
       <fieldset>
         <label>Subtotal: $</label>
         <input
@@ -102,7 +102,7 @@ const DebtForm = (props) => {
           placeholder="0"
           required
           value={debt.who_paid}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         <br />
         <label>Which Bill: </label>
@@ -125,7 +125,7 @@ const DebtForm = (props) => {
           placeholder="0"
           required
           value={debt.who_owes}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         <br />
         <label>Have they been paid back? </label>
@@ -154,7 +154,7 @@ const DebtForm = (props) => {
         <input
           type="text"
           id="add-debt-notes"
-          name="notes"
+          name="debt_notes"
           className="debt_inputs"
           placeholder="Any details about the debt, such as what the person got and item costs"
           value={debt.debt_notes}

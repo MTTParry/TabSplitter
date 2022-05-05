@@ -156,7 +156,7 @@ app.post("/db/debts", cors(), async (req, res) => {
       newDebt.who_owes,
       newDebt.debt_paid_up,
       newDebt.debt_notes,
-      newDebt.subtotal,
+      newDebt.subtotal
     ]
   );
   console.log(result.rows[0]);
@@ -189,22 +189,26 @@ app.delete("/db/debts/:debt_id", cors(), async (req, res) => {
 });
 
 // Put request - Update request
-app.put("/db/contacts/:contact_Id", cors(), async (req, res) => {
+app.put("/db/contacts/:contact_id", cors(), async (req, res) => {
   const contactId = req.params.contact_id;
   console.log("Put statement", req.params);
   const updateContact = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
-    email: req.params.email,
-    preferred_payment_method: req.params.preferred_payment_method,
+    email: req.body.email,
+    preferred_payment_method: req.body.preferred_payment_method,
   };
-  //console.log(req.params);
-  // UPDATE students SET lastname = 'TestMarch' WHERE id = 1;
-  console.log(contactId);
-  console.log(updateContact);
-  const query = `UPDATE contacts SET first_name=$1, last_name=$2 email=$3 preferred_payment_method=$4 WHERE contact_id = ${contactId} RETURNING *`;
+  console.log("PUT body", req.body);
+  console.log("PUT contact id", contactId);
+  console.log("Updated contact", updateContact);
+  const query = `UPDATE contacts SET first_name=$1, last_name=$2, email=$3, preferred_payment_method=$4 WHERE contact_id = ${contactId} RETURNING *`;
   console.log(query);
-  const values = [...updateContact];
+  const values = [
+    updateContact.first_name,
+    updateContact.last_name,
+    updateContact.email,
+    updateContact.preferred_payment_method,
+  ];
   try {
     const updated = await db.query(query, values);
     console.log(updated.rows[0]);

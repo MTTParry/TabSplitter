@@ -14,31 +14,27 @@ const ContactDropDown = (prop) => {
   }, []);
 
   useEffect(() => {
-   setReady(true)
-  },
-  [contactList])
+    setReady(true);
+  }, [contactList]);
 
   //Listing Contacts
   if (ready) {
-  return (
-    <div>
-      <label>{prop.label}</label>
-      {"      "}
-      <select onChange={prop.handleChange} required>
-        <option hidden>Select</option>
-        {contactList.map((contact) => (
-          <option value={contact.contact_id} key={contact.contact_id}>
-            {contact.first_name} {contact.last_name}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-  else {
     return (
-      <div>Drop Down is loading</div>
-    )
+      <div>
+        <label>{prop.label}</label>
+        {"      "}
+        <select onChange={prop.handleChange} name={prop.name} required>
+          <option hidden>Select</option>
+          {contactList.map((contact) => (
+            <option value={contact.contact_id} key={contact.contact_id}>
+              {contact.first_name} {contact.last_name}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  } else {
+    return <div>Drop Down is loading</div>;
   }
 };
 
