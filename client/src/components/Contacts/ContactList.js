@@ -44,7 +44,7 @@ function ContactList() {
   //PUT stuff
   // grabs the id of the post to be editted
   const editContact = (contact_id) => {
-    console.log(contact_id);
+    console.log("Contact ID", contact_id);
     setEditContactById(contact_id);
   };
 
@@ -94,7 +94,7 @@ function ContactList() {
 
               <button
                 className="editbuttons"
-                key="edit_${contact.contact_id}"
+                key="edit_contact_${contact.contact_id}"
                 value={contact.contact_id}
                 onClick={() => editContact(contact.contact_id)}
               >
@@ -103,7 +103,7 @@ function ContactList() {
 
               <button
                 className="deletebuttons"
-                key="delete_${contact.contact_id}"
+                key="delete_contact_${contact.contact_id}"
                 value={contact.contact_id}
                 onClick={() => deleteContact(contact.contact_id)}
               >

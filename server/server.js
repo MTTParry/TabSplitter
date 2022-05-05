@@ -155,23 +155,31 @@ app.post("/db/bills", cors(), async (req, res) => {
   const newBill = {
     transaction_date: req.body.transaction_date,
     subtotal: req.body.subtotal,
-    tax: req.body.tax,
-    tip: req.body.tip,
+    tax_rate: req.body.tax_rate,
+    tax_amount: req.body.tax_amount,
+    tip_rate: req.body.tip_rate,
+    tip_amount: req.body.tip_amount,
     who_paid: req.body.who_paid,
     paid_up: req.body.paid_up,
     bill_notes: req.body.bill_notes,
+    full_total: req.body.full_total,
+    location: req.body.location,
   };
   console.log([newBill]);
   const result = await db.query(
-    "INSERT INTO bill_list (transaction_date, subtotal, tax, tip, who_paid, paid_up, bill_notes, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, current_timestamp) RETURNING *",
+    "INSERT INTO bill_list (transaction_date, subtotal, tax_rate, tax_amount, tip_rate, tip_amount, who_paid, paid_up, bill_notes, full_total, location, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,current_timestamp) RETURNING *",
     [
       newBill.transaction_date,
       newBill.subtotal,
-      newBill.tax,
-      newBill.tip,
+      newBill.tax_rate,
+      newBill.tax_amount,
+      newBill.tip_rate,
+      newBill.tip_amount,
       newBill.who_paid,
       newBill.paid_up,
       newBill.bill_notes,
+      newBill.full_total,
+      newBill.location,
     ]
   );
   console.log(result.rows[0]);

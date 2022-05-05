@@ -43,10 +43,9 @@ function DebtList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editDebt = (debt) => {
-    const editById = debt.debt_id;
-    console.log(editById);
-    setEditDebtById(editById);
+  const editDebt = (debt_id) => {
+    console.log("Debt ID", debt_id);
+    setEditDebtById(debt_id);
   };
 
   const updateDebt = async (updatedDebtInfo) => {
@@ -80,7 +79,13 @@ function DebtList() {
 
       {debts.map((debt) => {
         if (debt.debt_id === editDebtById) {
-          return <DebtForm initialPost={debt} savePost={updateDebt} />;
+          return (
+            <DebtForm
+              initialDebt={debt}
+              savePost={updateDebt}
+              key={debt.debt_id}
+            />
+          );
         } else {
           return (
             <div className="card" key={debt.debt_id}>
@@ -109,7 +114,7 @@ function DebtList() {
 
               <button
                 className="editbuttons"
-                key="edit_${debt.debt_id}"
+                key="edit_debt_${debt.debt_id}"
                 value={debt.debt_id}
                 onClick={() => editDebt(debt.debt_id)}
               >
@@ -118,7 +123,7 @@ function DebtList() {
 
               <button
                 className="deletebuttons"
-                key="delete_${debt.debt_id}"
+                key="delete_debt_${debt.debt_id}"
                 value={debt.debt_id}
                 onClick={() => deleteDebt(debt.debt_id)}
               >

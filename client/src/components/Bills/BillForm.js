@@ -1,33 +1,32 @@
 import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 
-
 const emptyBill = {
   transaction_date: "",
   subtotal: null,
-  tax_rate: null,
+  tax_rate: 0,
   tax_amount: null,
   tip_rate: null,
-  tip_total: null,
+  tip_total: 0,
   who_paid: null,
   paid_up: null,
   notes: "",
-  full_total: null,
+  full_total: 0,
 };
 
 const BillForm = (props) => {
   //An initial student if there is one in props
-  const { initialBill = { ...emptyBill } } = props;
+  const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(initialBill);
+  const [bill, setBill] = useState(initialBill || emptyBill);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setBill((bill) => ({ ...bill, [name]: value }));
-    //console.log("client side", contact);
+    console.log("Bill, client side: " + name + ", value: " + value);
   };
 
   //A function to handle the POST request
@@ -123,16 +122,14 @@ const BillForm = (props) => {
           onChange={handleChange}
         />
         <br />
-        <label>Who Paid? </label>
-        <input
-          type="number"
+        <ContactDropDown
+          label="Who Paid?"
           id="add-bill-payer"
           name="who_paid"
           className="bill_inputs"
-          placeholder="0"
           required
           value={bill.email}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         <br />
         <label>Have they been paid back? </label>
@@ -142,7 +139,8 @@ const BillForm = (props) => {
           name="paid_up"
           className="bill_inputs"
           required
-          value={bill.paid_up}
+          value={false}
+          defaultChecked={bill.paid_up === false}
           onChange={handleChange}
         />{" "}
         <label>No</label>
@@ -152,13 +150,14 @@ const BillForm = (props) => {
           name="paid_up"
           className="bill_inputs"
           required
-          value={bill.paid_up}
+          value={true}
+          defaultChecked={bill.paid_up === true}
           onChange={handleChange}
         />{" "}
         <label>Yes</label>
         <br />
         <label>Notes:</label>
-        <input 
+        <input
           type="text"
           id="add-bill-notes"
           name="bill_notes"

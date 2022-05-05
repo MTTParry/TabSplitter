@@ -13,17 +13,17 @@ const emptyDebt = {
 
 const DebtForm = (props) => {
   //An initial student if there is one in props
-  const { initialDebt = { ...emptyDebt } } = props;
+  const { initialDebt } = props;
 
   // Initial State
-  const [debt, setDebt] = useState(initialDebt);
+  const [debt, setDebt] = useState(initialDebt || emptyDebt);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setDebt((debt) => ({ ...debt, [name]: value }));
-    console.log("client side: " + name + ", value: " + value);
+    console.log("Contact, client side: " + name + ", value: " + value);
   };
 
   //A function to handle the POST request
@@ -54,12 +54,14 @@ const DebtForm = (props) => {
       })
       .then((data) => {
         console.log("The updated debt info: ", data);
-        props.updateContact(data);
+        props.updateDebt(data);
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log({ initialDebt });
+    console.log(debt.debt_id);
     if (debt.debt_id) {
       updateDebtInfo(debt);
     } else {

@@ -13,8 +13,8 @@ function App() {
       <h1>TabSplitter</h1>
       <hr />
       <hr />
-      <DebtList />
-      <DebtForm />
+      <BillList />
+      <BillForm />
     </div>
   );
 }
