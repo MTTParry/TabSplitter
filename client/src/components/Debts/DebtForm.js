@@ -8,7 +8,7 @@ const emptyDebt = {
   how_much: null,
   who_owes: null,
   debt_paid_up: null,
-  notes: ""
+  notes: "",
 };
 
 const DebtForm = (props) => {
@@ -101,7 +101,7 @@ const DebtForm = (props) => {
           className="debt_inputs"
           required
           value={debt.which_bill}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         <br />
         <ContactDropDown
@@ -121,7 +121,7 @@ const DebtForm = (props) => {
           name="debt_paid_up"
           className="debt_inputs"
           required
-          defaultChecked={debt.debt_paid_up  === false}
+          defaultChecked={debt.debt_paid_up === false}
           value={false}
           onChange={handleChange}
         />{" "}
@@ -132,7 +132,7 @@ const DebtForm = (props) => {
           name="debt_paid_up"
           className="debt_inputs"
           required
-          defaultChecked={debt.debt_paid_up  === true}
+          defaultChecked={debt.debt_paid_up === true}
           value={true}
           onChange={handleChange}
         />{" "}
