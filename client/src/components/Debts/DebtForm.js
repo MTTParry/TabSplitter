@@ -135,7 +135,8 @@ const DebtForm = (props) => {
           name="debt_paid_up"
           className="debt_inputs"
           required
-          value={debt.debt_paid_up}
+          defaultChecked={debt.debt_paid_up  === false}
+          value={false}
           onChange={handleChange}
         />{" "}
         <label>No</label>
@@ -145,7 +146,8 @@ const DebtForm = (props) => {
           name="debt_paid_up"
           className="debt_inputs"
           required
-          value={debt.debt_paid_up}
+          defaultChecked={debt.debt_paid_up  === true}
+          value={true}
           onChange={handleChange}
         />{" "}
         <label>Yes</label>

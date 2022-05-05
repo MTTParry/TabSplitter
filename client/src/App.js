@@ -15,7 +15,6 @@ function App() {
       <hr />
       <DebtList />
       <DebtForm />
-      <ContactList />
     </div>
   );
 }
