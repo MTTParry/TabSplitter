@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useEffect } from "react/cjs/react.production.min";
 
 const emptyContact = {
   first_name: "",
@@ -13,7 +12,7 @@ const ContactForm = (props) => {
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(emptyContact);
+  const [contact, setContact] = useState(initialContact || emptyContact);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -58,20 +57,10 @@ const ContactForm = (props) => {
       });
   };
 
-  useEffect =
-    (() => {
-      if (initialContact == undefined) {
-        setContact(emptyContact);
-      } else {
-        setContact(initialContact)
-      }
-    },
-    []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log({ initialContact });
-    // console.log(contact.contact_id);
+    console.log({ initialContact });
+    console.log(contact.contact_id);
     if (contact.contact_id) {
       updateContactInfo(contact);
     } else {
