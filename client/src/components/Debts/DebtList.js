@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
 const emptyDebt = {
-  which_bill: null,
-  subtotal: null,
-  how_much: null,
-  who_owes: null,
-  debt_paid_up: null,
+  which_bill: 0,
+  subtotal: 0,
+  how_much: 0,
+  who_owes: 0,
+  debt_paid_up: 0,
   notes: "",
 };
 
@@ -97,7 +97,7 @@ function DebtList() {
                 How they would like to be paid back:{" "}
                 <b>{debt.preferred_payment_method}</b>
               </p>
-              <ul className="bill-info">
+              <ul className="debt-info">
                 <li>
                   Subtotal: <b>{debt.subtotal}</b>
                 </li>

@@ -7,19 +7,19 @@ const NavBar = () => {
       <Nav>
         <Bars />
         <NavMenu>
-          <NavLink to="/" activeStyle>
+          <NavLink exact to="/" activeStyle={{fontWeight: "bold"}}>
             TabSplitter
           </NavLink>
           
-          <NavLink to="/contacts" activeStyle>
+          <NavLink exact to="/contacts" activeStyle={{fontWeight: "bold"}}>
             Contacts
           </NavLink>
 
-          <NavLink to="/bills" activeStyle>
+          <NavLink exact to="/bills" activeStyle={{fontWeight: "bold"}}>
             Bills
           </NavLink>
           
-          <NavLink to="/debts" activeStyle>
+          <NavLink exact to="/debts" activeStyle={{fontWeight: "bold"}}>
             Debts
           </NavLink>
         </NavMenu>

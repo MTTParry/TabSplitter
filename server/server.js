@@ -81,7 +81,7 @@ app.get("/db/bills_full", cors(), async (req, res) => {
 app.get("/db/debts", cors(), async (req, res) => {
   try {
     const { rows: debts } = await db.query(
-      "SELECT * FROM debt_list FULL OUTER JOIN contacts ON debt_list.who_owes = contacts.contact_id FULL OUTER JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
+      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
     );
     res.send(debts);
   } catch (e) {
