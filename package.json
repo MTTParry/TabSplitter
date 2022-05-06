@@ -5,8 +5,10 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "components": "^0.1.0",
     "create-react-app": "^5.0.0",
-    "react-router-dom": "^6.3.0",
+    "react-icons": "^4.3.1",
+    "styled": "^1.0.0",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

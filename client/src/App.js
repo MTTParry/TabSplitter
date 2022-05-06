@@ -1,27 +1,39 @@
 import "./App.css";
 import React from "react";
-import { NavBar } from 
+import { Link } from 'react-router-dom';
 
-
-import ContactForm from "./components/Contacts/ContactForm";
+import NavBar from "./components/OtherComponents/NavBar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/OtherComponents/HomeAbout";
 import ContactList from "./components/Contacts/ContactList";
 import BillList from "./components/Bills/BillList";
-import BillForm from "./components/Bills/BillForm";
 import DebtList from "./components/Debts/DebtList";
-import DebtForm from "./components/Debts/DebtForm";
 
+/*
+<Router>
+        <NavBar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/contacts" element={<ContactList />} />
+          <Route exact path="/bills" element={<BillList />} />
+          <Route exact path="/debts" element={<DebtList />} />
+        </Routes>
+      </Router>
+*/
 function App() {
   return (
     <div className="App">
-
-
-
-
-      <h1>TabSplitter</h1>
-      <hr />
-      <hr />
-      <BillList />
-      <BillForm />
+      <Router>
+        <NavBar />
+        <div>
+          <Switch>
+            <Route exact path='/' element={<Home />} />
+            <Route path='/contacts' element={<ContactList />} />
+            <Route path='/bills' element={<BillList />} />
+            <Route path="/debts" element={<DebtList />} />
+          </Switch>
+        </div>
+      </Router>
     </div>
   );
 }
