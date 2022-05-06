@@ -2,15 +2,16 @@ import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 
 const emptyBill = {
-  transaction_date: "",
-  subtotal: null,
+  transaction_date: new Date(),
+  subtotal: 0,
   tax_rate: 0,
-  tax_amount: null,
-  tip_rate: null,
+  tax_total: 0,
+  tip_rate: 0,
   tip_total: 0,
-  who_paid: null,
+  who_paid: 0,
   paid_up: null,
-  notes: "",
+  bill_notes: "",
+  location: "",
   full_total: 0,
 };
 
@@ -94,10 +95,11 @@ const BillForm = (props) => {
           placeholder="0"
           value={bill.tax_total}
           onChange={handleChange}
-          name="tax_amount"
+          name="tax_total"
         />
         <br />
-        Tax Rate: {Math.round(bill.tax_amount / bill.subtotal * 1000000)/10000}%
+        Tax Rate:{" "}
+        {Math.round((bill.tax_amount / bill.subtotal) * 1000000) / 10000}%
         <br />
         <label>Tip (percentage): </label>
         <input

@@ -8,6 +8,9 @@ import Home from "./components/OtherComponents/HomeAbout";
 import ContactList from "./components/Contacts/ContactList";
 import BillList from "./components/Bills/BillList";
 import DebtList from "./components/Debts/DebtList";
+import ContactForm from "./components/Contacts/ContactForm";
+import BillForm from "./components/Bills/BillForm";
+import DebtForm from "./components/Debts/DebtForm";
 
 /*
 <Router>
@@ -29,8 +32,11 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/contacts" component={ContactList} />
+            <Route path="/contactsform" component={ContactForm} />
             <Route path="/bills" component={BillList} />
+            <Route path="/billsform" component={BillForm} />
             <Route path="/debts" component={DebtList} />
+            <Route path="/debtsform" component={DebtForm} />
           </Switch>
         </div>
       </Router>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.production.min";
 
 const emptyContact = {
   first_name: "",
@@ -12,14 +13,14 @@ const ContactForm = (props) => {
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(initialContact || emptyContact);
+  const [contact, setContact] = useState(emptyContact);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setContact((contact) => ({ ...contact, [name]: value }));
-    //console.log("client side", contact);
+    console.log("Contact - client side", contact);
   };
 
   //A function to handle the POST request
@@ -57,10 +58,20 @@ const ContactForm = (props) => {
       });
   };
 
+  useEffect =
+    (() => {
+      if (initialContact == undefined) {
+        setContact(emptyContact);
+      } else {
+        setContact(initialContact)
+      }
+    },
+    []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ initialContact });
-    console.log(contact.contact_id);
+    // console.log({ initialContact });
+    // console.log(contact.contact_id);
     if (contact.contact_id) {
       updateContactInfo(contact);
     } else {
@@ -75,7 +86,7 @@ const ContactForm = (props) => {
         <label>First Name: </label>
         <input
           type="text"
-          id="add-contact-firstname"
+          id="add-contact-first-name"
           className="contact_inputs"
           placeholder="Tab"
           required
@@ -88,7 +99,7 @@ const ContactForm = (props) => {
         <label>Last Name: </label>
         <input
           type="text"
-          id="add-contact-lastname"
+          id="add-contact-last-name"
           className="contact_inputs"
           placeholder="Splitter"
           value={contact.last_name}

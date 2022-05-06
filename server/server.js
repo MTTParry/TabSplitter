@@ -128,8 +128,8 @@ app.post("/db/contacts", cors(), async (req, res) => {
   console.log("Start server POST request...");
   try {
     const newContact = {
-      first_name: req.body.firstname,
-      last_name: req.body.lastname,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       email: req.body.email,
       preferred_payment_method: req.body.preferred_payment_method,
     };
@@ -156,9 +156,9 @@ app.post("/db/bills", cors(), async (req, res) => {
     transaction_date: req.body.transaction_date,
     subtotal: req.body.subtotal,
     tax_rate: req.body.tax_rate,
-    tax_amount: req.body.tax_amount,
+    tax_total: req.body.tax_total,
     tip_rate: req.body.tip_rate,
-    tip_amount: req.body.tip_amount,
+    tip_total: req.body.tip_total,
     who_paid: req.body.who_paid,
     paid_up: req.body.paid_up,
     bill_notes: req.body.bill_notes,
@@ -167,14 +167,14 @@ app.post("/db/bills", cors(), async (req, res) => {
   };
   console.log([newBill]);
   const result = await db.query(
-    "INSERT INTO bill_list (transaction_date, subtotal, tax_rate, tax_amount, tip_rate, tip_amount, who_paid, paid_up, bill_notes, full_total, location, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,current_timestamp) RETURNING *",
+    "INSERT INTO bill_list (transaction_date, subtotal, tax_rate, tax_total, tip_rate, tip_total, who_paid, paid_up, bill_notes, full_total, location, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,current_timestamp) RETURNING *",
     [
       newBill.transaction_date,
       newBill.subtotal,
       newBill.tax_rate,
-      newBill.tax_amount,
+      newBill.tax_total,
       newBill.tip_rate,
-      newBill.tip_amount,
+      newBill.tip_total,
       newBill.who_paid,
       newBill.paid_up,
       newBill.bill_notes,
