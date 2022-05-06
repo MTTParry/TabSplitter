@@ -11,6 +11,10 @@ const emptyDebt = {
   notes: "",
 };
 
+/*
+<p clasName="card-text">Posted {moment(blog.postdate).format('MM/DD/YYYY')}</p>
+ */
+
 function DebtList() {
   //This needs an empty array, or the whole thing breaks
   const [debts, setDebts] = useState([]);
