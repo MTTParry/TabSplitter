@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.production.min";
 import ContactDropDown from "../DropDowns/ContactDropList";
 
 const emptyBill = {
@@ -20,7 +21,18 @@ const BillForm = (props) => {
   const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(initialBill || emptyBill);
+  const [bill, setBill] = useState(emptyBill);
+
+  //for the initial state, for Puts/Edits
+  useEffect(() => {
+    setBill(initialBill);
+  }, [])
+
+  //if there is a change in props, it updates ot
+  useEffect(() => {
+    setBill(props.initialBill);
+  }, [props]);
+
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
