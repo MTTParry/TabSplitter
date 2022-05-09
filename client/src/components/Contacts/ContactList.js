@@ -43,10 +43,9 @@ function ContactList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editContact = (contact) => {
-    const editId = contact.contact_id;
-    console.log(editId);
-    setEditContactById(editId);
+  const editContact = (contact_id) => {
+    console.log("Contact ID", contact_id);
+    setEditContactById(contact_id);
   };
 
   const updateContact = async (updatedContactInfo) => {
@@ -64,14 +63,20 @@ function ContactList() {
 
     setEditContactById(null);
   };
-
+  console.log("editing contact by id", editContactById);
   return (
-    <div className="ts_lists">
+    <div className="lists">
       <h2> Contacts List </h2>
 
       {contacts.map((contact) => {
         if (contact.contact_id === editContactById) {
-          return <ContactForm initialPost={contact} savePost={updateContact} />;
+          return (
+            <ContactForm
+              initialContact={contact}
+              savePost={updateContact}
+              key={contact.contact_id}
+            />
+          );
         } else {
           return (
             <div className="card" key={contact.contact_id}>
@@ -79,29 +84,30 @@ function ContactList() {
                 {contact.first_name} {contact.last_name}
               </h2>
               <ul className="contact-info">
-                <li>Email: {contact.email}</li>
                 <li>
-                  How this person likes to be paid back:{" "}
-                  {contact.preferred_payment_method}
+                  Email: <b>{contact.email}</b>
+                </li>
+                <li>
+                  How to pay them: <b>{contact.preferred_payment_method}</b>
                 </li>
               </ul>
 
               <button
                 className="editbuttons"
-                key={contact.contact_id}
+                key="edit_contact_${contact.contact_id}"
                 value={contact.contact_id}
-                onClick={() => editContact(contact)}
+                onClick={() => editContact(contact.contact_id)}
               >
-                EDIT Contact
+                EDIT {contact.first_name}
               </button>
 
               <button
                 className="deletebuttons"
-                key={contact.contact_id}
+                key="delete_contact_${contact.contact_id}"
                 value={contact.contact_id}
                 onClick={() => deleteContact(contact.contact_id)}
               >
-                DELETE Post
+                DELETE {contact.first_name}
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
               <hr />

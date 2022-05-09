@@ -1,24 +1,25 @@
 import { useState } from "react";
 
 const emptyContact = {
-  firstname: "",
-  lastname: "",
+  first_name: "",
+  last_name: "",
   email: "",
   preferred_payment_method: "",
 };
 
 const ContactForm = (props) => {
   //An initial student if there is one in props
-  const { initialContact = { emptyContact } } = props;
+  const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(initialContact);
+  const [contact, setContact] = useState(initialContact || emptyContact);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setContact((contact) => ({ ...contact, [name]: value }));
+    //console.log("client side", contact);
   };
 
   //A function to handle the POST request
@@ -58,6 +59,8 @@ const ContactForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log({ initialContact });
+    console.log(contact.contact_id);
     if (contact.contact_id) {
       updateContactInfo(contact);
     } else {
@@ -67,7 +70,7 @@ const ContactForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>New Contact</h3>
+      <h3>{!contact.contact_id ? "Add New Contact" : "Edit Contact"}</h3>
       <fieldset>
         <label>First Name: </label>
         <input
@@ -76,8 +79,9 @@ const ContactForm = (props) => {
           className="contact_inputs"
           placeholder="Tab"
           required
-          value={contact.firstname}
+          value={contact.first_name}
           onChange={handleChange}
+          name="first_name"
         />
         <br />
 
@@ -87,14 +91,16 @@ const ContactForm = (props) => {
           id="add-contact-lastname"
           className="contact_inputs"
           placeholder="Splitter"
-          value={contact.lastname}
+          value={contact.last_name}
           onChange={handleChange}
+          name="last_name"
         />
         <br />
         <label>Email: </label>
         <input
           type="text"
           id="add-contact-email"
+          name="email"
           className="contact-inputs"
           placeholder="name@email.com"
           required
@@ -106,6 +112,7 @@ const ContactForm = (props) => {
         <textarea
           rows="5"
           className="contact-inputs"
+          name="preferred_payment_method"
           type="text"
           id="add-contact-payment-info"
           placeholder="Venmo (@name), Cash, CashApp (@name)"
