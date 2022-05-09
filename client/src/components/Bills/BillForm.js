@@ -90,7 +90,7 @@ const BillForm = (props) => {
         <label>Tax Amount: $</label>
         <input
           type="number"
-          id="add-bill-tax_amount"
+          id="add-bill-tax_total"
           className="bill_inputs"
           placeholder="0"
           value={bill.tax_total}
@@ -99,7 +99,7 @@ const BillForm = (props) => {
         />
         <br />
         Tax Rate:{" "}
-        {Math.round((bill.tax_amount / bill.subtotal) * 1000000) / 10000}%
+        {Math.round((bill.tax_total / bill.subtotal) * 1000000) / 10000}%
         <br />
         <label>Tip (percentage): </label>
         <input
