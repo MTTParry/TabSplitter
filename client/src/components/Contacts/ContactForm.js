@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const emptyContact = {
   first_name: "",
@@ -12,7 +12,17 @@ const ContactForm = (props) => {
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(initialContact || emptyContact);
+  const [contact, setContact] = useState(emptyContact);
+
+  //for the initial state, for Puts/Edits
+  useEffect(() => {
+    setContact(initialContact);
+  }, []);
+
+  //if there is a change in props, it updates ot
+  useEffect(() => {
+    setContact(props.initialContact);
+  }, [props]);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
