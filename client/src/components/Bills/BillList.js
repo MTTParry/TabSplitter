@@ -47,9 +47,9 @@ function BillList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editBill = (billId) => {
-    console.log(billId);
-    setEditBillById(billId);
+  const editBill = (bill_id) => {
+    console.log(bill_id);
+    setEditBillById(bill_id);
   };
 
   const updateBill = async (updatedBillInfo) => {
