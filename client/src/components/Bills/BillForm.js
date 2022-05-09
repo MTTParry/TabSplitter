@@ -1,25 +1,13 @@
 import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
-
-const emptyBill = {
-  transaction_date: "",
-  subtotal: null,
-  tax_rate: 0,
-  tax_amount: null,
-  tip_rate: null,
-  tip_total: 0,
-  who_paid: null,
-  paid_up: null,
-  notes: "",
-  full_total: 0,
-};
+import EmptyBill from "./EmptyBill";
 
 const BillForm = (props) => {
   //An initial student if there is one in props
   const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(initialBill || emptyBill);
+  const [bill, setBill] = useState(initialBill || EmptyBill);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -97,7 +85,8 @@ const BillForm = (props) => {
           name="tax_amount"
         />
         <br />
-        Tax Rate: {Math.round(bill.tax_amount / bill.subtotal * 1000000)/10000}%
+        Tax Rate:{" "}
+        {Math.round((bill.tax_amount / bill.subtotal) * 1000000) / 10000}%
         <br />
         <label>Tip (percentage): </label>
         <input

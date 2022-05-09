@@ -1,18 +1,12 @@
 import { useState } from "react";
-
-const emptyContact = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  preferred_payment_method: "",
-};
+import EmptyContact from "./EmptyContact";
 
 const ContactForm = (props) => {
   //An initial student if there is one in props
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(initialContact || emptyContact);
+  const [contact, setContact] = useState(initialContact || EmptyContact);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {

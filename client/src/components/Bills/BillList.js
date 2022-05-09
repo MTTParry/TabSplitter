@@ -2,18 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BillForm from "./BillForm";
 
-const emptyBill = {
-  transaction_date: "",
-  subtotal: null,
-  tax_rate: null,
-  tax_amount: null,
-  tip_rate: null,
-  tip_total: null,
-  who_paid: null,
-  paid_up: null,
-  bill_notes: "",
-  full_total: null,
-};
 
 function BillList() {
   //This needs an empty array, or the whole thing breaks

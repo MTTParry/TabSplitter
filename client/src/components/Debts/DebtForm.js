@@ -1,22 +1,14 @@
 import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import BillDropDown from "../DropDowns/BillDropList";
-
-const emptyDebt = {
-  which_bill: null,
-  subtotal: null,
-  how_much: null,
-  who_owes: null,
-  debt_paid_up: null,
-  notes: "",
-};
+import EmptyDebt from "./EmptyDebt";
 
 const DebtForm = (props) => {
   //An initial student if there is one in props
   const { initialDebt } = props;
 
   // Initial State
-  const [debt, setDebt] = useState(initialDebt || emptyDebt);
+  const [debt, setDebt] = useState(initialDebt || EmptyDebt);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
