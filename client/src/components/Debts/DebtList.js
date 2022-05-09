@@ -37,7 +37,7 @@ function DebtList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setDebts(debts.filter((debt) => debt.debt_id !== debt_id));
       }
     } catch (error) {

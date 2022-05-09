@@ -31,7 +31,7 @@ function ContactList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setContacts(
           contacts.filter((contact) => contact.contact_id !== contact_id)
         );

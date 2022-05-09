@@ -37,7 +37,7 @@ function BillList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setBills(bills.filter((bill) => bill.bill_id !== bill_id));
       }
     } catch (error) {
