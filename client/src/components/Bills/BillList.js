@@ -2,11 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BillForm from "./BillForm";
 
-
 function BillList() {
   //This needs an empty array, or the whole thing breaks
   const [bills, setBills] = useState([]);
-  const [editBillById, setEditBillById] = useState(null);
+  const [billIdToEdit, setBillIdToEdit] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5005/db/bills")
@@ -38,7 +37,7 @@ function BillList() {
   const editBill = (bill) => {
     const editId = bill.bill_id;
     console.log(editId);
-    setEditBillById(editId);
+    setBillIdToEdit(editId);
   };
 
   const updateBill = async (updatedBillInfo) => {
@@ -54,7 +53,7 @@ function BillList() {
       return newListBills;
     });
 
-    setEditBillById(null);
+    setBillIdToEdit(null);
   };
 
   return (
@@ -71,15 +70,16 @@ function BillList() {
       </ul>
 
       {bills.map((bill) => {
-        if (bill.bill_id === editBillById) {
+        if (bill.bill_id === billIdToEdit) {
           return <BillForm initialPost={bill} savePost={updateBill} />;
         } else {
           return (
             <div className="card" key={bill.bill_id}>
-              <h2>
-                Bill ID #{bill.bill_id}
-              </h2>
-              <p>On {bill.transaction_date}, {bill.first_name} {bill.last_name} paid a bill of ${bill.full_total}.</p>
+              <h2>Bill ID #{bill.bill_id}</h2>
+              <p>
+                On {bill.transaction_date}, {bill.first_name} {bill.last_name}{" "}
+                paid a bill of ${bill.full_total}.
+              </p>
               <ul className="bill-info">
                 <li>
                   Subtotal: <b>{bill.subtotal}</b>
@@ -94,8 +94,7 @@ function BillList() {
                   Total: <b>{bill.full_total}</b>
                 </li>
                 <li>
-                  Has this person been fully paid back?{" "}
-                  <b>{bill.paid_up}</b>
+                  Has this person been fully paid back? <b>{bill.paid_up}</b>
                 </li>
                 <li>
                   Notes: <b>{bill.bill_notes}</b>
