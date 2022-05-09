@@ -2,15 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
-const emptyDebt = {
-  which_bill: null,
-  subtotal: null,
-  how_much: null,
-  who_owes: null,
-  debt_paid_up: null,
-  notes: "",
-};
-
 function DebtList() {
   //This needs an empty array, or the whole thing breaks
   const [debts, setDebts] = useState([]);
