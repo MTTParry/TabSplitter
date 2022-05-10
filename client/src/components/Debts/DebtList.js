@@ -2,6 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
+/*
+<p clasName="card-text">Posted {moment(blog.postdate).format('MM/DD/YYYY')}</p>
+ */
+
 function DebtList() {
   //This needs an empty array, or the whole thing breaks
   const [debts, setDebts] = useState([]);
@@ -24,7 +28,7 @@ function DebtList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setDebts(debts.filter((debt) => debt.debt_id !== debt_id));
       }
     } catch (error) {
@@ -88,7 +92,7 @@ function DebtList() {
                 How they would like to be paid back:{" "}
                 <b>{debt.preferred_payment_method}</b>
               </p>
-              <ul className="bill-info">
+              <ul className="debt-info">
                 <li>
                   Subtotal: <b>{debt.subtotal}</b>
                 </li>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.production.min";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import EmptyBill from "./EmptyBill";
 
@@ -7,7 +8,18 @@ const BillForm = (props) => {
   const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(initialBill || EmptyBill);
+  const [bill, setBill] = useState(emptyBill);
+
+  //for the initial state, for Puts/Edits
+  useEffect(() => {
+    setBill(initialBill);
+  }, [])
+
+  //if there is a change in props, it updates ot
+  useEffect(() => {
+    setBill(props.initialBill);
+  }, [props]);
+
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -89,16 +101,16 @@ const BillForm = (props) => {
         <label>Tax Amount: $</label>
         <input
           type="number"
-          id="add-bill-tax_amount"
+          id="add-bill-tax_total"
           className="bill_inputs"
           placeholder="0"
           value={bill.tax_total}
           onChange={handleChange}
-          name="tax_amount"
+          name="tax_total"
         />
         <br />
         Tax Rate:{" "}
-        {Math.round((bill.tax_amount / bill.subtotal) * 1000000) / 10000}%
+        {Math.round((bill.tax_total / bill.subtotal) * 1000000) / 10000}%
         <br />
         <label>Tip (percentage): </label>
         <input

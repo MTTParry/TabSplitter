@@ -24,7 +24,7 @@ function BillList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setBills(bills.filter((bill) => bill.bill_id !== bill_id));
       }
     } catch (error) {
@@ -34,10 +34,9 @@ function BillList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editBill = (bill) => {
-    const editId = bill.bill_id;
-    console.log(editId);
-    setBillIdToEdit(editId);
+  const editBill = (bill_id) => {
+    console.log(bill_id);
+    setEditBillById(bill_id);
   };
 
   const updateBill = async (updatedBillInfo) => {

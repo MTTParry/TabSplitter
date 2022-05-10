@@ -81,7 +81,7 @@ app.get("/db/bills_full", cors(), async (req, res) => {
 app.get("/db/debts", cors(), async (req, res) => {
   try {
     const { rows: debts } = await db.query(
-      "SELECT * FROM debt_list FULL OUTER JOIN contacts ON debt_list.who_owes = contacts.contact_id FULL OUTER JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
+      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
     );
     res.send(debts);
   } catch (e) {
@@ -128,8 +128,8 @@ app.post("/db/contacts", cors(), async (req, res) => {
   console.log("Start server POST request...");
   try {
     const newContact = {
-      first_name: req.body.firstname,
-      last_name: req.body.lastname,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       email: req.body.email,
       preferred_payment_method: req.body.preferred_payment_method,
     };
@@ -156,9 +156,9 @@ app.post("/db/bills", cors(), async (req, res) => {
     transaction_date: req.body.transaction_date,
     subtotal: req.body.subtotal,
     tax_rate: req.body.tax_rate,
-    tax_amount: req.body.tax_amount,
+    tax_total: req.body.tax_total,
     tip_rate: req.body.tip_rate,
-    tip_amount: req.body.tip_amount,
+    tip_total: req.body.tip_total,
     who_paid: req.body.who_paid,
     paid_up: req.body.paid_up,
     bill_notes: req.body.bill_notes,
@@ -167,14 +167,14 @@ app.post("/db/bills", cors(), async (req, res) => {
   };
   console.log([newBill]);
   const result = await db.query(
-    "INSERT INTO bill_list (transaction_date, subtotal, tax_rate, tax_amount, tip_rate, tip_amount, who_paid, paid_up, bill_notes, full_total, location, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,current_timestamp) RETURNING *",
+    "INSERT INTO bill_list (transaction_date, subtotal, tax_rate, tax_total, tip_rate, tip_total, who_paid, paid_up, bill_notes, full_total, location, creationTimeStamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,current_timestamp) RETURNING *",
     [
       newBill.transaction_date,
       newBill.subtotal,
       newBill.tax_rate,
-      newBill.tax_amount,
+      newBill.tax_total,
       newBill.tip_rate,
-      newBill.tip_amount,
+      newBill.tip_total,
       newBill.who_paid,
       newBill.paid_up,
       newBill.bill_notes,
@@ -238,9 +238,10 @@ app.delete("/db/debts/:debt_id", cors(), async (req, res) => {
 });
 
 // Put request - Update request
+//contacts
 app.put("/db/contacts/:contact_id", cors(), async (req, res) => {
   const contactId = req.params.contact_id;
-  console.log("Put statement", req.params);
+  console.log("Contacts Put statement", req.params);
   const updateContact = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -257,6 +258,86 @@ app.put("/db/contacts/:contact_id", cors(), async (req, res) => {
     updateContact.last_name,
     updateContact.email,
     updateContact.preferred_payment_method,
+  ];
+  try {
+    const updated = await db.query(query, values);
+    console.log(updated.rows[0]);
+    res.send(updated.rows[0]);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
+  }
+});
+
+//bills
+app.put("/db/bills/:bill_id", cors(), async (req, res) => {
+  const billId = req.params.bill_id;
+  console.log("Bill Put statement", req.params);
+  const updateBill = {
+    transaction_date: req.body.transaction_date,
+    subtotal: req.body.subtotal,
+    tax_rate: req.body.tax_rate,
+    tax_total: req.body.tax_total,
+    tip_rate: req.body.tip_rate,
+    tip_total: req.body.tip_total,
+    who_paid: req.body.who_paid,
+    paid_up: req.body.paid_up,
+    bill_notes: req.body.bill_notes,
+    full_total: req.body.full_total,
+    location: req.body.location,
+  };
+  console.log("Bill PUT body", req.body);
+  console.log("PUT bill id", billId);
+  console.log("Updated Bill", updateBill);
+  const query = `UPDATE bill_list SET transaction_date=$1, subtotal=$2, tax_rate=$3, tax_total=$4, tip_rate=$5, tip_total=$6, who_paid=$7, paid_up=$8, bill_notes=$9, full_total=$10, location=$11 WHERE bill_id = ${billId} RETURNING *`;
+  console.log(query);
+  const values = [
+    updateBill.transaction_date,
+    updateBill.subtotal,
+    updateBill.tax_rate,
+    updateBill.tax_total,
+    updateBill.tip_rate,
+    updateBill.tip_total,
+    updateBill.who_paid,
+    updateBill.paid_up,
+    updateBill.bill_notes,
+    updateBill.full_total,
+    updateBill.location,
+  ];
+  try {
+    const updated = await db.query(query, values);
+    console.log(updated.rows[0]);
+    res.send(updated.rows[0]);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
+  }
+});
+
+//debts
+app.put("/db/debts/:debt_id", cors(), async (req, res) => {
+  const debtId = req.params.debt_id;
+  console.log("Debt Put statment", req.params);
+  const updateDebt = {
+    which_bill: req.body.which_bill,
+    how_much: req.body.how_much,
+    who_owes: req.body.who_owes,
+    debt_paid_up: req.body.debt_paid_up,
+    debt_notes: req.body.debt_notes,
+    subtotal: req.body.subtotal,
+  };
+  console.log("PUT body", req.body);
+  console.log("PUT debt id", debtId);
+  console.log("Updated debt", updateDebt);
+  const query = `UPDATE debt_list SET which_bill=$1, how_much=$2, who_owes=$3, debt_paid_up=$4, debt_notes=$5, subtotal=$6 WHERE debt_id = ${debtId} RETURNING *`;
+  console.log(query);
+  const values = [
+    updateDebt.which_bill,
+    updateDebt.how_much,
+    updateDebt.who_owes,
+    updateDebt.debt_paid_up,
+    updateDebt.debt_notes,
+    updateDebt.subtotal,
   ];
   try {
     const updated = await db.query(query, values);
