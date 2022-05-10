@@ -8,7 +8,7 @@ const BillForm = (props) => {
   const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(emptyBill);
+  const [bill, setBill] = useState(EmptyBill);
 
   //for the initial state, for Puts/Edits
   useEffect(() => {

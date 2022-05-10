@@ -8,7 +8,7 @@ const DebtForm = (props) => {
   const { initialDebt } = props;
 
   // Initial State
-  const [debt, setDebt] = useState(emptyDebt);
+  const [debt, setDebt] = useState(EmptyDebt);
 
   //for the initial state, for Puts/Edits
   useEffect(() => {

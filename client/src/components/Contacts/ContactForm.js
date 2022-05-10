@@ -6,7 +6,7 @@ const ContactForm = (props) => {
   const { initialContact } = props;
 
   // Initial State
-  const [contact, setContact] = useState(emptyContact);
+  const [contact, setContact] = useState(EmptyContact);
 
   //for the initial state, for Puts/Edits
   useEffect(() => {
