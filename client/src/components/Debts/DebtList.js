@@ -3,13 +3,17 @@ import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
 const emptyDebt = {
-  which_bill: null,
-  subtotal: null,
-  how_much: null,
-  who_owes: null,
-  debt_paid_up: null,
+  which_bill: 0,
+  subtotal: 0,
+  how_much: 0,
+  who_owes: 0,
+  debt_paid_up: 0,
   notes: "",
 };
+
+/*
+<p clasName="card-text">Posted {moment(blog.postdate).format('MM/DD/YYYY')}</p>
+ */
 
 function DebtList() {
   //This needs an empty array, or the whole thing breaks
@@ -33,7 +37,7 @@ function DebtList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setDebts(debts.filter((debt) => debt.debt_id !== debt_id));
       }
     } catch (error) {
@@ -97,7 +101,7 @@ function DebtList() {
                 How they would like to be paid back:{" "}
                 <b>{debt.preferred_payment_method}</b>
               </p>
-              <ul className="bill-info">
+              <ul className="debt-info">
                 <li>
                   Subtotal: <b>{debt.subtotal}</b>
                 </li>

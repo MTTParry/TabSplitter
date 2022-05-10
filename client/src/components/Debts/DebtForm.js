@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import BillDropDown from "../DropDowns/BillDropList";
 
@@ -16,7 +16,17 @@ const DebtForm = (props) => {
   const { initialDebt } = props;
 
   // Initial State
-  const [debt, setDebt] = useState(initialDebt || emptyDebt);
+  const [debt, setDebt] = useState(emptyDebt);
+
+  //for the initial state, for Puts/Edits
+  useEffect(() => {
+    setDebt(initialDebt);
+  }, []);
+
+  //if there is a change in props, it updates ot
+  useEffect(() => {
+    setDebt(props.initialDebt);
+  }, [props]);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {

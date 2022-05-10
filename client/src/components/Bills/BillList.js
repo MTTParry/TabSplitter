@@ -37,7 +37,7 @@ function BillList() {
           method: "DELETE",
         }
       );
-      if (deleteResponse.status === 200) {
+      if (deleteResponse.ok) {
         setBills(bills.filter((bill) => bill.bill_id !== bill_id));
       }
     } catch (error) {
@@ -47,10 +47,9 @@ function BillList() {
 
   //PUT stuff
   // grabs the id of the post to be editted
-  const editBill = (bill) => {
-    const editId = bill.bill_id;
-    console.log(editId);
-    setEditBillById(editId);
+  const editBill = (bill_id) => {
+    console.log(bill_id);
+    setEditBillById(bill_id);
   };
 
   const updateBill = async (updatedBillInfo) => {
@@ -88,10 +87,11 @@ function BillList() {
         } else {
           return (
             <div className="card" key={bill.bill_id}>
-              <h2>
-                Bill ID #{bill.bill_id}
-              </h2>
-              <p>On {bill.transaction_date}, {bill.first_name} {bill.last_name} paid a bill of ${bill.full_total}.</p>
+              <h2>Bill ID #{bill.bill_id}</h2>
+              <p>
+                On {bill.transaction_date}, {bill.first_name} {bill.last_name}{" "}
+                paid a bill of ${bill.full_total}.
+              </p>
               <ul className="bill-info">
                 <li>
                   Subtotal: <b>{bill.subtotal}</b>
@@ -106,8 +106,7 @@ function BillList() {
                   Total: <b>{bill.full_total}</b>
                 </li>
                 <li>
-                  Has this person been fully paid back?{" "}
-                  <b>{bill.paid_up}</b>
+                  Has this person been fully paid back? <b>{bill.paid_up}</b>
                 </li>
                 <li>
                   Notes: <b>{bill.bill_notes}</b>

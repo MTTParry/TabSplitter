@@ -7,20 +7,32 @@ const NavBar = () => {
       <Nav>
         <Bars />
         <NavMenu>
-          <NavLink to="/" activeStyle>
+          <NavLink exact to="/">
             TabSplitter
           </NavLink>
-          
-          <NavLink to="/contacts" activeStyle>
+
+          <NavLink exact to="/contacts">
             Contacts
           </NavLink>
 
-          <NavLink to="/bills" activeStyle>
+          <NavLink exact to="/contactsform">
+            Add Contact
+          </NavLink>
+
+          <NavLink exact to="/bills">
             Bills
           </NavLink>
-          
-          <NavLink to="/debts" activeStyle>
+
+          <NavLink exact to="/billsform">
+            Add Bill
+          </NavLink>
+
+          <NavLink exact to="/debts">
             Debts
+          </NavLink>
+
+          <NavLink exact to="/debtsform">
+            Add Debt
           </NavLink>
         </NavMenu>
       </Nav>
