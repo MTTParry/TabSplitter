@@ -2,23 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BillForm from "./BillForm";
 
-const emptyBill = {
-  transaction_date: "",
-  subtotal: null,
-  tax_rate: null,
-  tax_amount: null,
-  tip_rate: null,
-  tip_total: null,
-  who_paid: null,
-  paid_up: null,
-  bill_notes: "",
-  full_total: null,
-};
-
 function BillList() {
   //This needs an empty array, or the whole thing breaks
   const [bills, setBills] = useState([]);
-  const [editBillById, setEditBillById] = useState(null);
+  const [billIdToEdit, setBillIdToEdit] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5005/db/bills")
@@ -65,7 +52,7 @@ function BillList() {
       return newListBills;
     });
 
-    setEditBillById(null);
+    setBillIdToEdit(null);
   };
 
   return (
@@ -82,7 +69,7 @@ function BillList() {
       </ul>
 
       {bills.map((bill) => {
-        if (bill.bill_id === editBillById) {
+        if (bill.bill_id === billIdToEdit) {
           return <BillForm initialPost={bill} savePost={updateBill} />;
         } else {
           return (

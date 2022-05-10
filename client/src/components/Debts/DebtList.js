@@ -2,15 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DebtForm from "./DebtForm";
 
-const emptyDebt = {
-  which_bill: 0,
-  subtotal: 0,
-  how_much: 0,
-  who_owes: 0,
-  debt_paid_up: 0,
-  notes: "",
-};
-
 /*
 <p clasName="card-text">Posted {moment(blog.postdate).format('MM/DD/YYYY')}</p>
  */

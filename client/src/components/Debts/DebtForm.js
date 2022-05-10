@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import BillDropDown from "../DropDowns/BillDropList";
-
-const emptyDebt = {
-  which_bill: null,
-  subtotal: null,
-  how_much: null,
-  who_owes: null,
-  debt_paid_up: null,
-  notes: "",
-};
+import EmptyDebt from "./EmptyDebt";
 
 const DebtForm = (props) => {
   //An initial student if there is one in props
@@ -38,44 +30,56 @@ const DebtForm = (props) => {
 
   //A function to handle the POST request
   const postNewDebt = (newDebt) => {
-    return fetch("http://localhost:5005/db/debts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newDebt),
-    })
-      .then((response) => {
-        return response.json();
+    try {
+      return fetch("http://localhost:5005/db/debts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newDebt),
       })
-      .then((data) => {
-        console.log("From the debt add ", data);
-        // props.addPost(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("From the debt add ", data);
+          // props.addPost(data);
+        });
+    } catch (e) {
+      console.log("debt Post error", e.message);
+    }
   };
 
   //A function to handle the PUT request
   const updateDebtInfo = async (existingDebt) => {
-    return fetch(`http://localhost:5005/db/debts/${existingDebt.debt_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(existingDebt),
-    })
-      .then((response) => {
-        return response.json();
+    try {
+      return fetch(`http://localhost:5005/db/debts/${existingDebt.debt_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(existingDebt),
       })
-      .then((data) => {
-        console.log("The updated debt info: ", data);
-        props.updateDebt(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("The updated debt info: ", data);
+          props.updateDebt(data);
+        });
+    } catch (e) {
+      console.log("debt Put error", e.message);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ initialDebt });
-    console.log(debt.debt_id);
-    if (debt.debt_id) {
-      updateDebtInfo(debt);
-    } else {
-      postNewDebt(debt);
+    try {
+      console.log({ initialDebt });
+      console.log(debt.debt_id);
+      if (debt.debt_id) {
+        updateDebtInfo(debt);
+      } else {
+        postNewDebt(debt);
+      }
+    } catch (e) {
+      console.log("add/submit button error", e.message);
     }
   };
 

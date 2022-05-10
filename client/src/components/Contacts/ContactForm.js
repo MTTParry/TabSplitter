@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-
-const emptyContact = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  preferred_payment_method: "",
-};
+import EmptyContact from "./EmptyContact";
 
 const ContactForm = (props) => {
   //An initial student if there is one in props
@@ -34,47 +28,60 @@ const ContactForm = (props) => {
 
   //A function to handle the POST request
   const postNewContact = (newContact) => {
-    return fetch("http://localhost:5005/db/contacts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newContact),
-    })
-      .then((response) => {
-        return response.json();
+    try {
+      return fetch("http://localhost:5005/db/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newContact),
       })
-      .then((data) => {
-        console.log("From the contact add ", data);
-        // props.addPost(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("From the contact add ", data);
+          // props.addPost(data);
+        });
+    } catch (e) {
+      console.log("contact Post error", e.message);
+    }
   };
 
   //A function to handle the PUT request
   const updateContactInfo = async (existingContact) => {
-    return fetch(
-      `http://localhost:5005/db/contacts/${existingContact.contact_id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(existingContact),
-      }
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("The updated contact info: ", data);
-        props.updateContact(data);
-      });
+    try {
+      return fetch(
+        `http://localhost:5005/db/contacts/${existingContact.contact_id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(existingContact),
+        }
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("The updated contact info: ", data);
+          props.updateContact(data);
+        });
+    } catch (e) {
+      console.log("contact Put error", e.message);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ initialContact });
-    console.log(contact.contact_id);
-    if (contact.contact_id) {
-      updateContactInfo(contact);
-    } else {
-      postNewContact(contact);
+    try {
+      console.log({ initialContact });
+      console.log(contact.contact_id);
+      //consider adding "contact.hasOwnProperty(contact_id) &&
+      if (contact.contact_id) {
+        updateContactInfo(contact);
+      } else {
+        postNewContact(contact);
+      }
+    } catch (e) {
+      console.log("add/submit button error", e.message);
     }
   };
 

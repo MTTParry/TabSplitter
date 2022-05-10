@@ -1,20 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.production.min";
 import ContactDropDown from "../DropDowns/ContactDropList";
-
-const emptyBill = {
-  transaction_date: new Date(),
-  subtotal: 0,
-  tax_rate: 0,
-  tax_total: 0,
-  tip_rate: 0,
-  tip_total: 0,
-  who_paid: 0,
-  paid_up: null,
-  bill_notes: "",
-  location: "",
-  full_total: 0,
-};
+import EmptyBill from "./EmptyBill";
 
 const BillForm = (props) => {
   //An initial student if there is one in props
@@ -44,42 +31,54 @@ const BillForm = (props) => {
 
   //A function to handle the POST request
   const postNewBill = (newBill) => {
-    return fetch("http://localhost:5005/db/bills", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newBill),
-    })
-      .then((response) => {
-        return response.json();
+    try {
+      return fetch("http://localhost:5005/db/bills", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBill),
       })
-      .then((data) => {
-        console.log("From the bill add ", data);
-        // props.addPost(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("From the bill add ", data);
+          // props.addPost(data);
+        });
+    } catch (e) {
+      console.log("bill Post error:", e.message);
+    }
   };
 
   //A function to handle the PUT request
   const updateBillInfo = async (existingBill) => {
-    return fetch(`http://localhost:5005/db/bills/${existingBill.bill_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(existingBill),
-    })
-      .then((response) => {
-        return response.json();
+    try {
+      return fetch(`http://localhost:5005/db/bills/${existingBill.bill_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(existingBill),
       })
-      .then((data) => {
-        console.log("The updated bill info: ", data);
-        props.updateContact(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("The updated bill info: ", data);
+          props.updateContact(data);
+        });
+    } catch (e) {
+      console.log("bill Put error", e.message);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (bill.bill_id) {
-      updateBillInfo(bill);
-    } else {
-      postNewBill(bill);
+    try {
+      if (bill.bill_id) {
+        updateBillInfo(bill);
+      } else {
+        postNewBill(bill);
+      }
+    } catch (e) {
+      console.log("add/submit button error", e.message);
     }
   };
 

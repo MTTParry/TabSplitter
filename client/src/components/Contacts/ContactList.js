@@ -2,13 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ContactForm from "./ContactForm";
 
-const emptyContact = {
-  firstname: "",
-  lastname: "",
-  email: "",
-  preferred_payment_method: "",
-};
-
 function ContactList() {
   //This needs an empty array, or the whole thing breaks
   const [contacts, setContacts] = useState([]);
