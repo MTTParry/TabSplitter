@@ -8,17 +8,7 @@ const DebtForm = (props) => {
   const { initialDebt } = props;
 
   // Initial State
-  const [debt, setDebt] = useState(EmptyDebt);
-
-  //for the initial state, for Puts/Edits
-  useEffect(() => {
-    setDebt(initialDebt);
-  }, []);
-
-  //if there is a change in props, it updates ot
-  useEffect(() => {
-    setDebt(props.initialDebt);
-  }, [props]);
+  const [debt, setDebt] = useState(initialDebt || EmptyDebt);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
