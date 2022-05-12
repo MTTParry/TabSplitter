@@ -9,14 +9,9 @@ import DebtList from "./components/Debts/DebtList";
 import ContactForm from "./components/Contacts/ContactForm";
 import BillForm from "./components/Bills/BillForm";
 import DebtForm from "./components/Debts/DebtForm";
-import { SendEmail } from "./components/Debts/emailDebt";
 import { useEffect } from "react";
 
 function App() {
-  useEffect(() => {
-    SendEmail();
-  }, []);
-
   return (
     <div className="App">
       <Router>
