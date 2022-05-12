@@ -15,10 +15,7 @@ app.use(express.json());
 
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
-const sgMail = require('@sendgrid/mail')
-
-
-
+const sgMail = require("@sendgrid/mail");
 
 //creates an endpoint for the route /api
 app.get("/", (req, res) => {
@@ -217,23 +214,23 @@ app.post("/db/debts", cors(), async (req, res) => {
       newDebt.subtotal,
     ]
   );
-  console.log({result.debt_id})
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  console.log("results blah blah", result.rows[0].debt_id);
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
-    to: 'michaela.t.t.parry@gmail.com', // Change to your recipient
-    from: 'col.snake.butler@gmail.com', // Verified sender email
-    subject: 'Test email',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-  }
+    to: "michaela.t.t.parry@gmail.com", // Change to your recipient
+    from: "col.snake.butler@gmail.com", // Verified sender email
+    subject: "Test email",
+    text: "and easy to do anywhere, even with Node.js",
+    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+  };
   sgMail
     .send(msg)
     .then(() => {
-      console.log('Email sent')
+      console.log("Email sent");
     })
     .catch((error) => {
-      console.error(error)
-    })
+      console.error(error);
+    });
 
   console.log(result.rows[0]);
   res.json(result.rows[0]);
