@@ -147,6 +147,7 @@ const DebtForm = (props) => {
         <label>Notes: </label>
         <input
           type="text"
+          rows="5"
           id="add-debt-notes"
           name="debt_notes"
           className="debt_inputs"

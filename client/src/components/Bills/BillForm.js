@@ -193,6 +193,7 @@ const BillForm = (props) => {
         <label>Notes:</label>
         <input
           type="text"
+          rows="5"
           id="add-bill-notes"
           name="bill_notes"
           className="bill_inputs"
