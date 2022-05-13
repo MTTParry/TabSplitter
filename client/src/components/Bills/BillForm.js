@@ -6,6 +6,9 @@ import { GetTaxRate } from "../helper/FindTaxRate";
 import { GetTipAmount } from "../helper/FindTipTotal";
 import { GetTotal } from "../helper/FindTotal";
 
+// IMPORTANT: Tip_rate is an integer, not a decimal.
+//Remember to convert it before doing math with it.
+
 const BillForm = (props) => {
   //An initial student if there is one in props
   const { initialBill } = props;
