@@ -1,5 +1,5 @@
 export function GetTaxRate(bill) {
   let getTaxRate = (bill.tax_total / bill.subtotal);
 
-  return getTaxRate;
+  return getTaxRate.toFixed(4);
 }

@@ -113,7 +113,7 @@ const BillForm = (props) => {
           name="tax_total"
         />
         <br />
-        Tax Rate: {GetTaxRate(bill)}%
+        Tax Rate: {GetTaxRate(bill) * 100}%
         <br />
         <label>Tip (percentage): </label>
         <input

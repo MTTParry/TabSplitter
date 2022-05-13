@@ -1,5 +1,5 @@
 export function GetTipAmount(bill) {
-  let tipAmount = Math.round(bill.subtotal * bill.tip_rate) / 100;
+  let tipAmount = bill.subtotal * (bill.tip_rate / 100);
 
-  return tipAmount;
+  return tipAmount.toFixed(2);
 }
