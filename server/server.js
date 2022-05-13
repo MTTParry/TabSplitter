@@ -215,6 +215,10 @@ app.post("/db/debts", cors(), async (req, res) => {
     ]
   );
   console.log("results blah blah", result.rows[0].debt_id);
+  //query who_owes to get "to"
+  //query which.bill -> who_paid => all info
+  //async function
+  //move line 222 to line 19
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
     to: "michaela.t.t.parry@gmail.com", // Change to your recipient
