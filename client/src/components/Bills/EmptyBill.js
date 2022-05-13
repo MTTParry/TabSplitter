@@ -9,6 +9,7 @@ const EmptyBill = {
   paid_up: null,
   notes: "",
   full_total: 0,
+  location: "",
 };
 
 export default EmptyBill;
