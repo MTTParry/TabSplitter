@@ -1,5 +1,8 @@
-export function GetTotal(props) {
-  let total = props.subtotal + props.tip_total + props.tax_total;
+export function GetTotal(bill) {
+  let total =
+    parseFloat(bill.subtotal) +
+    parseFloat(bill.tip_total) +
+    parseFloat(bill.tax_total);
 
   return total;
 }

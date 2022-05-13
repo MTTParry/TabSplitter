@@ -59,7 +59,8 @@ CREATE TABLE public.bill_list (
     creationtimestamp timestamp without time zone,
     full_total numeric(8,2),
     tax_total numeric(7,2),
-    tip_total numeric(7,2)
+    tip_total numeric(7,2),
+    location text
 );
 
 
@@ -125,7 +126,6 @@ CREATE TABLE public.debt_list (
     debt_id integer NOT NULL,
     which_bill integer,
     how_much numeric(7,2),
-    who_paid integer,
     who_owes integer,
     debt_paid_up boolean,
     debt_notes text,
@@ -176,10 +176,12 @@ ALTER TABLE ONLY public.debt_list ALTER COLUMN debt_id SET DEFAULT nextval('publ
 -- Data for Name: bill_list; Type: TABLE DATA; Schema: public; Owner: mttparry
 --
 
-COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, who_paid, paid_up, bill_notes, creationtimestamp, full_total, tax_total, tip_total) FROM stdin;
-2	2022-04-25	40.00	0.0862	0.2000	2	f	Pete's	2022-04-26 11:19:00	51.45	3.45	8.00
-1	2022-04-18	101.40	0.0862	0.0000	2	f	Zazie's - They don't expect tips	2022-04-25 12:00:00	110.14	8.74	0.00
-3	2022-04-28	85.83	0.0863	0.2097	4	t	Ginza sushi	2022-04-29 13:40:00	111.24	7.41	18.00
+COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, who_paid, paid_up, bill_notes, creationtimestamp, full_total, tax_total, tip_total, location) FROM stdin;
+2	2022-04-25	40.00	0.0862	0.2000	2	f	Pete's	2022-04-26 11:19:00	51.45	3.45	8.00	Pete's
+3	2022-04-28	85.83	0.0863	0.2097	4	t	Ginza sushi	2022-04-29 13:40:00	111.24	7.41	18.00	Ginza Sushi
+7	2022-05-09	8008.00	0.0000	0.0000	9	f	This is a test. Checking empty values....	2022-05-09 13:21:59.94812	0.00	80.80	0.00	Imagination Land
+8	2022-05-10	0.00	0.0000	0.0000	25	f	This is a test. Attempt PUT. Then DELETE.	2022-05-10 12:53:59.649889	0.00	0.00	0.00	Imagination Land
+1	2022-04-18	101.40	0.0862	0.0000	2	f	Zazie's doesn't expect tips	2022-04-25 12:00:00	110.14	8.74	0.00	Zazie's
 \.
 
 
@@ -190,14 +192,15 @@ COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, 
 COPY public.contacts (contact_id, first_name, last_name, email, preferred_payment_method, creation_timestamp) FROM stdin;
 2	Zenzo	the Chinchilla	test@test.com	Venmo (@...)	2022-04-25 12:00:00
 3	Bootsy	Olwen	test@no.com	Venmo (@...)	2022-04-25 12:00:00
-1	Colonel Peeves	MaCavity	col.snake.butler@gmail.com	Venmo (@...) or check	2022-04-25 12:00:00
 4	Rose	Toes	tes@notarealemail.com	Cash money	2022-04-26 11:39:00
 9	Guest	\N	\N	You'll need to contact this person directly, on your own.	2022-04-28 13:50:41.106635
 8	Dog	Food	test@testtest.com	No pay, only play	2022-04-28 13:50:41.106635
 10	Sandy	Cheeks	no@no.com	Cash money in my hands	2022-04-28 14:02:30.513444
 13	Rain of	Terror	test2@gmail.com	Cash	2022-04-29 09:44:53.149162
-14	Burger	King	test@test.com	cashapp(@...)	2022-05-02 13:06:31.890603
-19	\N	\N	test@no.com	The souls of the innocent	2022-05-04 11:08:25.334444
+14	King	of Burgers	test@test.com	cashapp(@...)	2022-05-02 13:06:31.890603
+25	Melaylay	AlleyLay	test@no.com	Money, in any form	2022-05-06 14:14:13.432556
+19	Name No	Test	test@no.com	The souls of the innocent, or 2 bagels.	2022-05-04 11:08:25.334444
+1	Colonel Peeves	MaCavity	col.snake.butler@gmail.com	Venmo (@...) or check	2022-04-25 12:00:00
 \.
 
 
@@ -205,10 +208,19 @@ COPY public.contacts (contact_id, first_name, last_name, email, preferred_paymen
 -- Data for Name: debt_list; Type: TABLE DATA; Schema: public; Owner: mttparry
 --
 
-COPY public.debt_list (debt_id, which_bill, how_much, who_paid, who_owes, debt_paid_up, debt_notes, creationtimestamp, subtotal) FROM stdin;
-1	1	47.74	2	3	f	2 eggs(29), 1 mocha (6.95), 1 pancake (24/3)	2022-04-25 12:00:00	43.95
-2	1	33.13	2	1	t	1 egg (16), 1 chai (6.5), 1 pancake (24/3)	2022-04-25 12:00:00	30.50
-3	3	55.62	4	1	f	even split	2022-04-29 15:35:00	46.62
+COPY public.debt_list (debt_id, which_bill, how_much, who_owes, debt_paid_up, debt_notes, creationtimestamp, subtotal) FROM stdin;
+1	1	47.74	3	f	2 eggs(29), 1 mocha (6.95), 1 pancake (24/3)	2022-04-25 12:00:00	43.95
+2	1	33.13	1	t	1 egg (16), 1 chai (6.5), 1 pancake (24/3)	2022-04-25 12:00:00	30.50
+3	3	55.62	1	f	even split	2022-04-29 15:35:00	46.62
+12	7	90.00	1	f	This is a test, only a test	2022-05-09 13:23:08.852029	80.08
+13	7	90.00	1	f	This is a test, only a test	2022-05-09 13:23:55.081355	80.08
+14	8	0.00	19	f	This is a test, only a test	2022-05-12 14:28:37.892611	0.00
+15	8	0.00	19	f	This is a test, only a test	2022-05-12 14:33:01.840191	0.00
+16	8	20.00	19	f	This is a test, only a test	2022-05-12 15:08:27.034019	20.00
+17	8	20.00	19	f	This is a test, only a test	2022-05-12 15:09:02.322908	20.00
+18	8	20.00	19	f	This is a test, only a test	2022-05-12 15:18:03.667096	20.00
+19	8	20.00	19	f	This is a test, only a test	2022-05-12 15:22:36.307791	20.00
+20	8	20.00	19	f	This is a test, only a test	2022-05-12 15:23:01.77065	20.00
 \.
 
 
@@ -216,21 +228,21 @@ COPY public.debt_list (debt_id, which_bill, how_much, who_paid, who_owes, debt_p
 -- Name: bill_list_bill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
 --
 
-SELECT pg_catalog.setval('public.bill_list_bill_id_seq', 5, true);
+SELECT pg_catalog.setval('public.bill_list_bill_id_seq', 8, true);
 
 
 --
 -- Name: contacts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
 --
 
-SELECT pg_catalog.setval('public.contacts_id_seq', 19, true);
+SELECT pg_catalog.setval('public.contacts_id_seq', 25, true);
 
 
 --
 -- Name: debt_list_debt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
 --
 
-SELECT pg_catalog.setval('public.debt_list_debt_id_seq', 5, true);
+SELECT pg_catalog.setval('public.debt_list_debt_id_seq', 20, true);
 
 
 --
@@ -279,14 +291,6 @@ ALTER TABLE ONLY public.debt_list
 
 ALTER TABLE ONLY public.debt_list
     ADD CONSTRAINT debt_list_who_owes_fkey FOREIGN KEY (who_owes) REFERENCES public.contacts(contact_id);
-
-
---
--- Name: debt_list debt_list_who_paid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mttparry
---
-
-ALTER TABLE ONLY public.debt_list
-    ADD CONSTRAINT debt_list_who_paid_fkey FOREIGN KEY (who_paid) REFERENCES public.contacts(contact_id);
 
 
 --
