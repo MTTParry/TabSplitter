@@ -97,7 +97,7 @@ const BillForm = (props) => {
           min="0"
           step="0.01"
           required
-          value={bill.firstname}
+          value={bill.subtotal}
           onChange={handleChange}
           name="subtotal"
         />
@@ -191,9 +191,9 @@ const BillForm = (props) => {
         <label>Yes</label>
         <br />
         <label>Notes:</label>
-        <input
-          type="text"
+        <textarea
           rows="5"
+          type="text"
           id="add-bill-notes"
           name="bill_notes"
           className="bill_inputs"

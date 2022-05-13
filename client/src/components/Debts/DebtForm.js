@@ -145,7 +145,7 @@ const DebtForm = (props) => {
         <label>Yes</label>
         <br />
         <label>Notes: </label>
-        <input
+        <textarea
           type="text"
           rows="5"
           id="add-debt-notes"
