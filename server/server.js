@@ -40,7 +40,9 @@ app.get("/db/contacts", cors(), async (req, res) => {
 //simple bills
 app.get("/db/bills", cors(), async (req, res) => {
   try {
-    const { rows: bills } = await db.query("SELECT * FROM bill_list");
+    const { rows: bills } = await db.query(
+      "SELECT * FROM bill_list ORDER BY bill_id"
+    );
     res.send(bills);
   } catch (e) {
     console.log(e);
@@ -87,7 +89,7 @@ app.get("/db/bills_full", cors(), async (req, res) => {
 app.get("/db/debts", cors(), async (req, res) => {
   try {
     const { rows: debts } = await db.query(
-      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id"
+      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id ORDER BY debt_id"
     );
     res.send(debts);
   } catch (e) {

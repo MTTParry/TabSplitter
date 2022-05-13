@@ -1,9 +1,9 @@
 const EmptyBill = {
   transaction_date: "",
-  subtotal: null,
+  subtotal: 0,
   tax_rate: 0,
-  tax_amount: null,
-  tip_rate: null,
+  tax_total: 0,
+  tip_rate: 0,
   tip_total: 0,
   who_paid: null,
   paid_up: null,
