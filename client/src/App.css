@@ -37,6 +37,95 @@
   }
 }
 
-ul{
-  list-style: none;
+body {
+  background: url(Billsplitter_bg2.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+  font-family: Athelas, "Times", serif;
+  font-size: 2em;
+}
+
+h2,
+h3 {
+  font-family: Athelas, "Times", serif;
+  font-size: 1.75em;
+}
+
+ul {
+  list-style-type: circle;
+  text-align: left;
+  font-family: Freight Sans, sans-serif;
+  font-size: 1em;
+}
+
+ul .p {
+  font-family: Freight Sans, sans-serif;
+  font-size: 1.5em;
+  text-align: left;
+}
+
+ul .li {
+  padding-left: 1.5em;
+  list-style-position: outside;
+  padding-bottom: 0.5em;
+  margin-right: 5em;
+  font-family: Freight Sans, sans-serif;
+  font-size: 0.5em;
+}
+
+fieldset {
+  display: block;
+  width: 80%;
+  margin-right: 5%;
+  margin-left: 5%;
+  text-align: left;
+  background-color: #e4d9ff99;
+  padding: 1% 5%;
+  border-color: #129490;
+  font-family: Freight Sans, sans-serif;
+  font-size: 1.25em;
+}
+
+fieldset .input {
+  margin: 5px;
+  text-align: left;
+}
+
+/* Buttons */
+.addbutton {
+  border: none;
+  padding: 15px 32px;
+  background-color: #065143;
+  color: #fff;
+  font-family: Freight Sans, sans-serif;
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-top: 15px;
+}
+
+.deletebuttons {
+  border: none;
+  padding: 15px 32px;
+  background-color: #ff0035;
+  color: #fff;
+  font-family: Freight Sans, sans-serif;
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-top: 15px;
+}
+
+.editbuttons {
+  border: none;
+  padding: 15px 32px;
+  background-color: #00b6ff;
+  color: #fff;
+  font-family: Freight Sans, sans-serif;
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-top: 15px;
 }

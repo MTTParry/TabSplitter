@@ -128,7 +128,7 @@ const ContactForm = (props) => {
           onChange={handleChange}
         />
       </fieldset>
-      <button type="submit">
+      <button type="submit" className="addbutton">
         {!contact.contact_id ? "Add Contact" : "Save Changes"}
       </button>
     </form>
