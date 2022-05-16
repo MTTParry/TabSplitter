@@ -3,7 +3,7 @@ const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
 const db = require("../server/db/db-connection.js");
-const REACT_BUILD_DIR = path.join(__dirname, "build");
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
 const app = express();
 app.use(express.static(REACT_BUILD_DIR));
 
@@ -18,7 +18,7 @@ app.use(express.json());
 const sgMail = require("@sendgrid/mail");
 
 //creates an endpoint for the route /api
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
