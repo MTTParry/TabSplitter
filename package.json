@@ -7,10 +7,10 @@
   "scripts": {
     "client": "npm start --prefix client",
     "server": "npm run dev --prefix server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "run-p server:start && client:start",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "run-p server:start && client:start",
     "server:start": "cd server && npm start",
-    "client:start": "cd client && npm start"
+    "client:start": "cd client && npm prod"
   },
   "dependencies": {
     "components": "^0.1.0",
