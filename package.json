@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start": "run-p server:start && client:start",
     "server:start": "cd server && npm start",
-    "client:start": "cd client && npm prod",
+    "client:start": "cd client && npm run prod",
     "postinstall": "npm run client:start"
   },
   "dependencies": {
