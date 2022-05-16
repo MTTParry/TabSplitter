@@ -8,7 +8,9 @@
     "client": "npm start --prefix client",
     "server": "npm run dev --prefix server",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "run-p server client"
+    "start": "run-p server:start && client:start",
+    "server:start": "cd server && npm start",
+    "client:start": "cd client && npm start"
   },
   "dependencies": {
     "components": "^0.1.0",
@@ -21,5 +23,8 @@
   "devDependencies": {
     "concurrently": "^7.1.0",
     "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "node": "16.15.0"
   }
 }
