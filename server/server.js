@@ -3,7 +3,7 @@ const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
 const db = require("../server/db/db-connection.js");
-const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
+const REACT_BUILD_DIR = path.join(__dirname, "build");
 const app = express();
 app.use(express.static(REACT_BUILD_DIR));
 
