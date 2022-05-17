@@ -17,11 +17,6 @@ app.use(express.json());
 // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require("@sendgrid/mail");
 
-//creates an endpoint for the route /api
-app.get("*", (req, res) => {
-  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
-});
-
 // GETS
 // CONTACT LIST
 app.get("/db/contacts", cors(), async (req, res) => {
@@ -377,6 +372,11 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
     console.log(e);
     return res.status(400).json({ e });
   }
+});
+
+//creates an endpoint for the route /api
+app.get("*", (req, res) => {
+  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
 // console.log that your server is up and running
