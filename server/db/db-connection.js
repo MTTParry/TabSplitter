@@ -1,7 +1,8 @@
 const { Pool } = require("pg");
 let DATABASE_URL;
 if (process.env.NODE_ENV === "production") {
-  DATABASE_URL = process.env.DATABASE_URI;
+  DATABASE_URL = process.env.DATABASE_URL;
+  console.log("HELLO");
 } else {
   DATABASE_URL = process.env.LOCAL_DATABASE_URL;
 }
