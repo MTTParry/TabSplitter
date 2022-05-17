@@ -96,6 +96,35 @@ fieldset .input {
   text-align: left;
 }
 
+.card {
+  background-color: #12949099;
+  font-family: Freight Sans, sans-serif;
+  font-size: 1.25em;
+  width: 80%;
+  margin: 5px 10%;
+  border: 2px;
+  border-color: #065143;
+  border-style: solid;
+  border-radius: 15px;
+}
+
+.card .b {
+  text-decoration: underline;
+}
+
+.note {
+  font-family: Freight Sans, sans-serif;
+}
+.Instructions {
+  margin: 0 0 2% 20%;
+  font-family: Freight Sans, sans-serif;
+  font-size: 1.15em;
+}
+
+.Instructions .li {
+  text-indent: 2em;
+}
+
 /* Buttons */
 .addbutton {
   border: none;
@@ -109,8 +138,7 @@ fieldset .input {
 }
 
 .deletebuttons {
-  border: none;
-  padding: 15px 32px;
+  padding: 5px 15px;
   background-color: #ff0035;
   color: #fff;
   font-family: Freight Sans, sans-serif;
@@ -120,8 +148,7 @@ fieldset .input {
 }
 
 .editbuttons {
-  border: none;
-  padding: 15px 32px;
+  padding: 5px 15px;
   background-color: #00b6ff;
   color: #fff;
   font-family: Freight Sans, sans-serif;
