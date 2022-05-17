@@ -43,6 +43,8 @@ When a debt is added, an email is sent to the person who owes that debt, informi
   - User also inputs who owes this debt, have they been paid back, and any additional notes they want to include
     - This is usually what the person ordered/ate, as well as the base prices for those items, or other information like if it was an even split
   - When a debt is submitted, an email is sent to the person who owes that debt, informing them about what they owe, who they owe, and how to pay them back
+    - It does this using Twilio's SendGrid API
+      - You will need your own API Key to make this work for you
 
 ## Built With
 
