@@ -1,31 +1,36 @@
 import { useState } from "react";
-import { useEffect } from "react/cjs/react.production.min";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import EmptyBill from "./EmptyBill";
+
+import { GetTaxRate } from "../helper/FindTaxRate";
+import { GetTipAmount } from "../helper/FindTipTotal";
+import { GetTotal } from "../helper/FindTotal";
+
+// IMPORTANT: Tip_rate is an integer, not a decimal.
+//Remember to convert it before doing math with it.
 
 const BillForm = (props) => {
   //An initial student if there is one in props
   const { initialBill } = props;
 
   // Initial State
-  const [bill, setBill] = useState(EmptyBill);
-
-  //for the initial state, for Puts/Edits
-  useEffect(() => {
-    setBill(initialBill);
-  }, [])
-
-  //if there is a change in props, it updates ot
-  useEffect(() => {
-    setBill(props.initialBill);
-  }, [props]);
-
+  const [bill, setBill] = useState(initialBill || EmptyBill);
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setBill((bill) => ({ ...bill, [name]: value }));
+    setBill((bill) => {
+      let tempBill = { ...bill, [name]: value };
+
+      tempBill.tax_rate = GetTaxRate(tempBill);
+
+      tempBill.tip_total = GetTipAmount(tempBill);
+
+      tempBill.full_total = GetTotal(tempBill);
+
+      return tempBill;
+    });
     console.log("Bill, client side: " + name + ", value: " + value);
   };
 
@@ -92,8 +97,10 @@ const BillForm = (props) => {
           id="add-bill-subtotal"
           className="bill_inputs"
           placeholder="0"
+          min="0"
+          step="0.01"
           required
-          value={bill.firstname}
+          value={bill.subtotal}
           onChange={handleChange}
           name="subtotal"
         />
@@ -109,8 +116,7 @@ const BillForm = (props) => {
           name="tax_total"
         />
         <br />
-        Tax Rate:{" "}
-        {Math.round((bill.tax_total / bill.subtotal) * 1000000) / 10000}%
+        Tax Rate: {GetTaxRate(bill) * 100}%
         <br />
         <label>Tip (percentage): </label>
         <input
@@ -125,9 +131,9 @@ const BillForm = (props) => {
         />
         %
         <br />
-        Tip Amount: {(bill.subtotal * bill.tip_rate) / 100}
+        Tip Amount: ${bill.tip_total}
         <br />
-        Full Amount: [calculations to come]
+        Full Amount: ${GetTotal(bill)}
         <br />
         <label>When: </label>
         <input
@@ -188,7 +194,8 @@ const BillForm = (props) => {
         <label>Yes</label>
         <br />
         <label>Notes:</label>
-        <input
+        <textarea
+          rows="5"
           type="text"
           id="add-bill-notes"
           name="bill_notes"

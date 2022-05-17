@@ -8,7 +8,7 @@ function BillList() {
   const [billIdToEdit, setBillIdToEdit] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/db/bills")
+    fetch("http://localhost:5005/db/bills_full")
       .then((response) => response.json())
       .then((billData) => {
         setBills(billData);
@@ -76,8 +76,9 @@ function BillList() {
             <div className="card" key={bill.bill_id}>
               <h2>Bill ID #{bill.bill_id}</h2>
               <p>
-                On {bill.transaction_date}, {bill.first_name} {bill.last_name}{" "}
-                paid a bill of ${bill.full_total}.
+                On {bill.transaction_date.slice(0, 10)}, {bill.payee.first_name}{" "}
+                {bill.payee.last_name} paid a bill of <b>${bill.full_total}</b>{" "}
+                at <b>{bill.location}</b>.
               </p>
               <ul className="bill-info">
                 <li>

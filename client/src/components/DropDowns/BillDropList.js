@@ -27,7 +27,8 @@ const BillDropDown = (prop) => {
           <option hidden>Select</option>
           {billList.map((bill) => (
             <option value={bill.bill_id} key={bill.bill_id}>
-              #{bill.bill_id}: {bill.location} on {bill.transaction_date}
+              #{bill.bill_id}: {bill.location} on{" "}
+              {bill.transaction_date.slice(0, 10)}
             </option>
           ))}
         </select>

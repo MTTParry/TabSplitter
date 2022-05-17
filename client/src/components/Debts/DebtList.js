@@ -86,7 +86,7 @@ function DebtList() {
             <div className="card" key={debt.debt_id}>
               <h2>
                 {debt.first_name} is owed {debt.how_much}, from bill id #
-                {debt.bill_id} on {debt.transaction_date}.
+                {debt.bill_id} on {debt.transaction_date.slice(0, 10)}.
               </h2>
               <p>
                 How they would like to be paid back:{" "}
