@@ -36,13 +36,22 @@ When a debt is added, an email is sent to the person who owes that debt, informi
   - User inputs the subtotal, the tax amount, and the tip percentage
   - TabSplitter calculate the tax rate, the tip amount, and the full amount
   - User also inputs when the bill occured, where it happened, who paid, has the bill been paid back, and any additional notes they want to include
-   - Example: John Doe paid a bill at Zazie's on 2022-04-18. The subtotal was $101.4, the tax amount was $8.74, and there was no tip ()
+   - Example: John Doe paid a bill at Zazie's on 2022-04-18.
+      - The subtotal was $101.4, the tax amount was $8.74, and there was no tip (0%)
+      - The tax rate is 8.62%, the tip amount is $0, and the Total is $110.14.
+      - Has John been paid back? False.
+      - Notes: Zazie's doesn't accept tips.
 - Debts
   - User selects which bill the debt is associated with, as well as inputting the subtotal (menu price of the person's individual items)
   - TabSplitter calculates their total
     - This includes their subtotal, as well as their portion of tax and tip
   - User also inputs who owes this debt, have they been paid back, and any additional notes they want to include
     - This is usually what the person ordered/ate, as well as the base prices for those items, or other information like if it was an even split
+   - Example: Jane Doe owes John Doe from the bill on 2022-04-18, at Zazie's.
+      - Her subtotal is $43.95
+      - Her total debt is $47.74
+      - She has not paid back this debt yet.
+      - Notes: Jane ordered 2 eggs(29), 1 mocha (6.95), 1 pancake (24/3; she split an order of 3 pancakes with two other people)
   - When a debt is submitted, an email is sent to the person who owes that debt, informing them about what they owe, who they owe, and how to pay them back
 
 ## Built With
