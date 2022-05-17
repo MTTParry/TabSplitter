@@ -31,11 +31,12 @@ When a debt is added, an email is sent to the person who owes that debt, informi
 
 - Create Contacts
   - First name, last name, email, and how this person prefers to be paid back
-    -Example: John Doe at fake.email prefers to be paid via Ve
+    - Example: John Doe at fake.email prefers to be paid via Venmo(@VenmoUserName)
 - Bills
   - User inputs the subtotal, the tax amount, and the tip percentage
   - TabSplitter calculate the tax rate, the tip amount, and the full amount
   - User also inputs when the bill occured, where it happened, who paid, has the bill been paid back, and any additional notes they want to include
+   - Example: John Doe paid a bill at Zazie's on 2022-04-18. The subtotal was $101.4, the tax amount was $8.74, and there was no tip ()
 - Debts
   - User selects which bill the debt is associated with, as well as inputting the subtotal (menu price of the person's individual items)
   - TabSplitter calculates their total
