@@ -80,7 +80,7 @@ function ContactList() {
                 <li>
                   Email: <b>{contact.email}</b>
                 </li>
-                <br/>
+                <br />
                 <li>
                   How to pay them: <b>{contact.preferred_payment_method}</b>
                 </li>
