@@ -17,11 +17,6 @@ app.use(express.json());
 // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require("@sendgrid/mail");
 
-//creates an endpoint for the route /api
-app.get("*", (req, res) => {
-  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
-});
-
 // GETS
 // CONTACT LIST
 app.get("/db/contacts", cors(), async (req, res) => {
@@ -217,17 +212,27 @@ app.post("/db/debts", cors(), async (req, res) => {
     ]
   );
   console.log("results blah blah", result.rows[0].debt_id);
+  const debtInfo = result.rows[0];
   //query who_owes to get "to"
-  //query which.bill -> who_paid => all info
-  //async function
-  //move line 222 to line 19
+  const emailTo = await db.query("SELECT * FROM contacts WHERE contact_id=$1", [
+    newDebt.who_owes,
+  ]);
+  const billInfo = await db.query("SELECT * FROM bill_list WHERE bill_id=$1", [
+    newDebt.which_bill,
+  ]);
+  const debtFrom = await db.query(
+    "SELECT * FROM contacts WHERE contact_id=$1",
+    [billInfo.who_paid]
+  );
+
+  //consider moving line 222 to line 19 -- not sure what line that was :[
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
-    to: "michaela.t.t.parry@gmail.com", // Change to your recipient
+    to: `${emailTo.email}`, // Change to your recipient
     from: "col.snake.butler@gmail.com", // Verified sender email
-    subject: "Test email",
-    text: "and easy to do anywhere, even with Node.js",
-    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    subject: "You have a new debt to pay",
+    text: `Hello ${emailTo.first_name} ${emailTo.last_name}, You have a new debt to pay! You owe ${debtFrom.first_name} ${debtFrom.last_name} $${newDebt.how_much}. ${debtFrom.first_name} prefers to be paid ${debtFrom.preferred_payment_method}. Feel free to contact ${debtFrom.first_name} at ${debtFrom.email}. -TabSplitter`,
+    html: `Hello ${emailTo.first_name} ${emailTo.last_name}, <br/>You have a new debt to pay! <br/> You owe ${debtFrom.first_name} ${debtFrom.last_name} <b>$${newDebt.how_much}</b>. ${debtFrom.first_name} prefers to be paid via <b>${debtFrom.preferred_payment_method}</b>. <br/>Feel free to contact ${debtFrom.first_name} at ${debtFrom.email}.<br/>-TabSplitter`,
   };
   sgMail
     .send(msg)
@@ -235,7 +240,7 @@ app.post("/db/debts", cors(), async (req, res) => {
       console.log("Email sent");
     })
     .catch((error) => {
-      console.error(error);
+      console.error("API error:", error);
     });
 
   console.log(result.rows[0]);
@@ -377,6 +382,11 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
     console.log(e);
     return res.status(400).json({ e });
   }
+});
+
+//creates an endpoint for the route /api
+app.get("*", (req, res) => {
+  res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
 // console.log that your server is up and running
