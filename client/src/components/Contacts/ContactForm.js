@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EmptyContact from "./EmptyContact";
 
 const ContactForm = (props) => {
