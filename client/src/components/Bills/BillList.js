@@ -35,7 +35,7 @@ function BillList() {
   //PUT stuff
   // grabs the id of the post to be editted
   const editBill = (bill_id) => {
-    console.log(bill_id);
+    // console.log("Bill ID", bill_id);
     setBillIdToEdit(bill_id);
   };
 
@@ -51,7 +51,6 @@ function BillList() {
       }
       return newListBills;
     });
-
     setBillIdToEdit(null);
   };
 
@@ -70,7 +69,13 @@ function BillList() {
 
       {bills.map((bill) => {
         if (bill.bill_id === billIdToEdit) {
-          return <BillForm initialPost={bill} savePost={updateBill} />;
+          return (
+            <BillForm
+              initialBill={bill}
+              onSave={updateBill}
+              key={bill.bill_id}
+            />
+          );
         } else {
           return (
             <div className="card" key={bill.bill_id}>

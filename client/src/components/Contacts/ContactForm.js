@@ -63,8 +63,8 @@ const ContactForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      console.log({ initialContact });
-      console.log(contact.contact_id);
+      // console.log({ initialContact });
+      // console.log(contact.contact_id);
       //consider adding "contact.hasOwnProperty(contact_id) &&
       if (contact.contact_id) {
         updateContactInfo(contact);

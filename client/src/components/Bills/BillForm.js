@@ -68,7 +68,7 @@ const BillForm = (props) => {
         })
         .then((data) => {
           console.log("The updated bill info: ", data);
-          props.updateContact(data);
+          props.onSave(data);
         });
     } catch (e) {
       console.log("bill Put error", e.message);
@@ -93,7 +93,7 @@ const BillForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>New Bill</h3>
+      <h3>{!bill.bill_id ? "Add New Bill" : "Edit Bill"}</h3>
       <fieldset>
         <label>Subtotal: $</label>
         <input
@@ -150,6 +150,11 @@ const BillForm = (props) => {
           value={bill.transaction_date}
           onChange={handleChange}
         />
+        {!bill.bill_id ? (
+          ""
+        ) : (
+          <i> Previous Date: {bill.transaction_date.slice(0, 10)}</i>
+        )}
         <br />
         <label>Where: </label>
         <input
