@@ -77,7 +77,7 @@ function DebtList() {
           return (
             <DebtForm
               initialDebt={debt}
-              savePost={updateDebt}
+              onSave={updateDebt}
               key={debt.debt_id}
             />
           );

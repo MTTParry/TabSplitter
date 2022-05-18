@@ -9,6 +9,8 @@ const DebtForm = (props) => {
 
   // Initial State
   const [debt, setDebt] = useState(initialDebt || EmptyDebt);
+  const [showDebtAddedMsg, setShowDebtAddedMsg] = useState();
+  const [prevDebtInfo, setPrevDebtInfo] = useState();
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -51,7 +53,7 @@ const DebtForm = (props) => {
         })
         .then((data) => {
           console.log("The updated debt info: ", data);
-          props.updateDebt(data);
+          props.onSave(data);
         });
     } catch (e) {
       console.log("debt Put error", e.message);
@@ -67,6 +69,9 @@ const DebtForm = (props) => {
         updateDebtInfo(debt);
       } else {
         postNewDebt(debt);
+        setPrevDebtInfo(debt.how_much);
+        setShowDebtAddedMsg(true);
+        setDebt(EmptyDebt);
       }
     } catch (e) {
       console.log("add/submit button error", e.message);
@@ -159,6 +164,17 @@ const DebtForm = (props) => {
       <button type="submit" className="addbutton">
         {!debt.debt_id ? "Add Debt" : "Save Changes"}
       </button>
+      <div>
+        {showDebtAddedMsg ? (
+          <p className="post_success">
+            Debt of ${prevDebtInfo} Added!
+            <br />
+            Email sent to the person who owes!
+          </p>
+        ) : (
+          ""
+        )}
+      </div>
     </form>
   );
 };
