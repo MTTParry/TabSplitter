@@ -7,6 +7,8 @@ const ContactForm = (props) => {
 
   // Initial State
   const [contact, setContact] = useState(initialContact || EmptyContact);
+  const [showContactAddedMsg, setShowContactAddedMsg] = useState();
+  const [prevContactName, setPrevContactName] = useState();
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -29,7 +31,6 @@ const ContactForm = (props) => {
         })
         .then((data) => {
           console.log("From the contact add ", data);
-          // props.addPost(data);
         });
     } catch (e) {
       console.log("contact Post error", e.message);
@@ -52,7 +53,7 @@ const ContactForm = (props) => {
         })
         .then((data) => {
           console.log("The updated contact info: ", data);
-          props.updateContact(data);
+          props.onSave(data);
         });
     } catch (e) {
       console.log("contact Put error", e.message);
@@ -69,6 +70,9 @@ const ContactForm = (props) => {
         updateContactInfo(contact);
       } else {
         postNewContact(contact);
+        setPrevContactName(contact.first_name);
+        setShowContactAddedMsg(true);
+        setContact(EmptyContact);
       }
     } catch (e) {
       console.log("add/submit button error", e.message);
@@ -131,6 +135,7 @@ const ContactForm = (props) => {
       <button type="submit" className="addbutton">
         {!contact.contact_id ? "Add Contact" : "Save Changes"}
       </button>
+      <div>{showContactAddedMsg ? <p className="post_success">{prevContactName} Added!</p> : ""}</div>
     </form>
   );
 };

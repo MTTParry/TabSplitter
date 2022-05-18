@@ -53,9 +53,9 @@ function ContactList() {
       }
       return newListContacts;
     });
-
     setEditContactById(null);
   };
+
   console.log("editing contact by id", editContactById);
   return (
     <div className="lists">
@@ -66,7 +66,7 @@ function ContactList() {
           return (
             <ContactForm
               initialContact={contact}
-              savePost={updateContact}
+              onSave={updateContact}
               key={contact.contact_id}
             />
           );
