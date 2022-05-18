@@ -16,29 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE "tabSplitter";
---
--- Name: tabSplitter; Type: DATABASE; Schema: -; Owner: mttparry
---
-
-CREATE DATABASE "tabSplitter" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'C';
-
-
-ALTER DATABASE "tabSplitter" OWNER TO mttparry;
-
-\connect "tabSplitter"
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -177,10 +154,10 @@ ALTER TABLE ONLY public.debt_list ALTER COLUMN debt_id SET DEFAULT nextval('publ
 --
 
 COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, who_paid, paid_up, bill_notes, creationtimestamp, full_total, tax_total, tip_total, location) FROM stdin;
-2	2022-04-25	40.00	0.08620	0	2	f	Pete's	2022-04-26 11:19:00	51.45	3.45	8.00	Pete's
-3	2022-04-28	85.83	0.08630	0	4	t	Ginza sushi	2022-04-29 13:40:00	111.24	7.41	18.00	Ginza Sushi
 1	2022-04-18	101.40	0.08620	0	2	f	Zazie's doesn't expect tips	2022-04-25 12:00:00	110.14	8.74	0.00	Zazie's
 9	2022-05-13	44.00	0.07390	15	2	f	Was the tip preventing this from posting? integer vs decimal.	2022-05-13 14:32:11.823464	53.85	3.25	6.60	Imagination Land
+2	2022-04-25	40.00	0.08620	20	2	f	Pete's	2022-04-26 11:19:00	51.45	3.45	8.00	Pete's
+3	2022-04-28	85.83	0.08630	20	4	t	Ginza sushi	2022-04-29 13:40:00	111.24	7.41	18.00	Ginza Sushi
 \.
 
 
@@ -191,14 +168,14 @@ COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, 
 COPY public.contacts (contact_id, first_name, last_name, email, preferred_payment_method, creation_timestamp) FROM stdin;
 2	Zenzo	the Chinchilla	test@test.com	Venmo (@...)	2022-04-25 12:00:00
 3	Bootsy	Olwen	test@no.com	Venmo (@...)	2022-04-25 12:00:00
-4	Rose	Toes	tes@notarealemail.com	Cash money	2022-04-26 11:39:00
 9	Guest	\N	\N	You'll need to contact this person directly, on your own.	2022-04-28 13:50:41.106635
-8	Dog	Food	test@testtest.com	No pay, only play	2022-04-28 13:50:41.106635
 10	Sandy	Cheeks	no@no.com	Cash money in my hands	2022-04-28 14:02:30.513444
 13	Rain of	Terror	test2@gmail.com	Cash	2022-04-29 09:44:53.149162
 14	King	of Burgers	test@test.com	cashapp(@...)	2022-05-02 13:06:31.890603
 25	Melaylay	AlleyLay	test@no.com	Money, in any form	2022-05-06 14:14:13.432556
 1	Colonel Peeves	MaCavity	col.snake.butler@gmail.com	Venmo (@...) or check	2022-04-25 12:00:00
+4	Rose	Toes	tes@notarealemail.com	Cash money or like, 1 bagel = $3	2022-04-26 11:39:00
+27	Lady	A. Bacchyn	no.i.is.too.scared@gmail.com	Pets	2022-05-16 18:06:02.831654
 \.
 
 
@@ -224,7 +201,7 @@ SELECT pg_catalog.setval('public.bill_list_bill_id_seq', 9, true);
 -- Name: contacts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
 --
 
-SELECT pg_catalog.setval('public.contacts_id_seq', 25, true);
+SELECT pg_catalog.setval('public.contacts_id_seq', 29, true);
 
 
 --

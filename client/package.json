@@ -23,7 +23,7 @@
     "runnode": "node ./src/index.js",
     "prod": "run-p build "
   },
-  "proxy": "http://localhost:5005",
+  // "proxy": "http://localhost:5005",
   "eslintConfig": {
     "extends": [
       "react-app",
