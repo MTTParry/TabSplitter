@@ -125,7 +125,6 @@ function DebtList() {
                 DELETE Debt
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
-              <hr />
             </div>
           );
         }

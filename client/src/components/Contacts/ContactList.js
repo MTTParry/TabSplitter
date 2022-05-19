@@ -81,6 +81,7 @@ function ContactList() {
                 <li>
                   Email: <b>{contact.email}</b>
                 </li>
+                <br />
                 <li>
                   How to pay them: <b>{contact.preferred_payment_method}</b>
                 </li>
@@ -104,7 +105,6 @@ function ContactList() {
                 DELETE {contact.first_name}
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
-              <hr />
             </div>
           );
         }

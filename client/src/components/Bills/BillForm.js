@@ -135,7 +135,7 @@ const BillForm = (props) => {
         />
         %
         <br />
-        Tip Amount: ${GetTipAmount(bill)}
+        Tip Amount: ${bill.tip_total}
         <br />
         Full Amount: ${GetTotal(bill)}
         <br />
