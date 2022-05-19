@@ -156,3 +156,20 @@ fieldset .input {
   font-size: 1.25em;
   margin-top: 15px;
 }
+
+/* Login Button */
+.login a {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  text-decoration: none;
+  font-family: Freight Sans, sans-serif;
+  color: #fff;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+  font-size: larger;
+  font-weight: bold;
+  margin-left: 600%;
+  margin-top: 40%;
+}
