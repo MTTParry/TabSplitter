@@ -2,17 +2,28 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
+const { auth } = require("express-openid-connect");
 const db = require("../server/db/db-connection.js");
 const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
 const app = express();
-app.use(express.static(REACT_BUILD_DIR));
+
+//auth0
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.SECRET,
+  baseURL: process.env.BASEURL,
+  clientID: process.env.CLIENTID,
+  issuerBaseURL: process.env.ISSUER,
+};
 
 const PORT = process.env.PORT || 5005;
 app.use(cors());
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
 app.use(express.json());
 
 //API stuff
-
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require("@sendgrid/mail");
@@ -71,7 +82,9 @@ app.get("/db/bills_full", cors(), async (req, res) => {
     );
 
     // await ALL of the async functions in the .map
-    const fullBills = await Promise.all(bills.map( async (bill) => getFullBill(bill) ));
+    const fullBills = await Promise.all(
+      bills.map(async (bill) => getFullBill(bill))
+    );
 
     res.send(fullBills);
   } catch (e) {
@@ -401,8 +414,8 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
       "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id WHERE debt_id = $1",
       [debtId]
     );
-    const joinedDebt = joinedDebts[0]
-    console.logjoinedDebt
+    const joinedDebt = joinedDebts[0];
+    console.logjoinedDebt;
     res.send(joinedDebt);
   } catch (e) {
     console.log(e);
@@ -413,21 +426,23 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
 //creates an endpoint for the route /api
 //If this is higher up then none of the requests work
 app.get("*", (req, res) => {
+  console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
+
+app.use(express.static(REACT_BUILD_DIR));
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-
 // ==========
 // Helper Functions
 
 /// Takes as input a bill object, populates with debts and payee
 const getFullBill = async (input) => {
-  let bill = {...input}
+  let bill = { ...input };
 
   const { rows: debts } = await db.query(
     //get all from debt_list items for each bill
@@ -445,4 +460,4 @@ const getFullBill = async (input) => {
   bill.payee = payees[0];
 
   return bill;
-}
+};
