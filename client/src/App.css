@@ -161,15 +161,31 @@ fieldset .input {
 .login a {
   display: flex;
   align-items: center;
-  text-align: right;
   text-decoration: none;
   font-family: Freight Sans, sans-serif;
   color: #fff;
-  padding: 0 1rem;
   height: 100%;
   cursor: pointer;
   font-size: larger;
   font-weight: bold;
-  margin-left: 600%;
-  margin-top: 40%;
+  padding-top: 45%;
+  padding-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  .login a {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    text-decoration: none;
+    font-family: Freight Sans, sans-serif;
+    color: #fff;
+    padding: 0 2em 0 0;
+    height: 100%;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bold;
+    margin-left: 600%;
+    margin-top: 40%;
+  }
 }

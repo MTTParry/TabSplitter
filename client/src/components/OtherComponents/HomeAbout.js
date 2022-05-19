@@ -4,6 +4,7 @@ const Home = () => {
   return (
     <div>
       <h1>TabSplitter</h1>
+      <h2><i>You must log in to access the program.</i></h2>
       <h2>How it works</h2>
       <ul>
         <p>This is a calculator app that allows you to:</p>

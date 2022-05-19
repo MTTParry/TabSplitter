@@ -23,7 +23,7 @@ const NavBar = () => {
   useEffect(() => {
     loadUser();
   }, []);
-
+  
   return (
     <>
       <Nav>
