@@ -388,6 +388,7 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
 });
 
 //creates an endpoint for the route /api
+//If this is higher up then none of the requests work
 app.get("*", (req, res) => {
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
