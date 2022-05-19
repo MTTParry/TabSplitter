@@ -45,6 +45,21 @@ app.get("/db/bills", cors(), async (req, res) => {
   }
 });
 
+//simple bills
+app.get("/db/bill/:bill_id", cors(), async (req, res) => {
+  const bill_id = req.params.bill_id;
+  try {
+    const { rows: bills } = await db.query(
+      "SELECT * FROM bill_list WHERE bill_id=$1",
+      [bill_id]
+    );
+    res.send(bills[0]);
+  } catch (e) {
+    console.log(e);
+    return res.status(404).json({ e });
+  }
+});
+
 // FULL BILL LIST
 // for the get, the bill table is joined with the contacts for display purposes
 // this way the list can show "<this person (contact.firstname)> paid <this much(bill_list.full_total)>"
@@ -55,25 +70,10 @@ app.get("/db/bills_full", cors(), async (req, res) => {
       "SELECT * FROM bill_list ORDER BY transaction_date;"
     );
 
-    //for each bill
-    for (bill of bills) {
-      const { rows: debts } = await db.query(
-        //get all from debt_list items for each bill
-        //debt_list has been joined with contacts, by who_owes, where debt_list bill is THAT bill
-        "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id WHERE debt_list.which_bill = $1;",
-        [bill.bill_id]
-      );
-      bill.debts = debts;
+    // await ALL of the async functions in the .map
+    const fullBills = await Promise.all(bills.map( async (bill) => getFullBill(bill) ));
 
-      const { rows: payees } = await db.query(
-        //Gets all the contact info for the bill payee
-        "SELECT * FROM contacts WHERE contact_id = $1;",
-        [bill.who_paid]
-      );
-      bill.payee = payees[0];
-    }
-
-    res.send(bills);
+    res.send(fullBills);
   } catch (e) {
     console.log(e);
     return res.status(400).json({ e });
@@ -213,29 +213,46 @@ app.post("/db/debts", cors(), async (req, res) => {
   );
   // console.log("results blah blah", result.rows[0].debt_id);
   // const debtInfo = result.rows[0];
-  //query who_owes to get "to"
-  const emailTo = await db.query("SELECT * FROM contacts WHERE contact_id=$1", [
-    newDebt.who_owes,
-  ]);
-  // console.log("Debtor", emailTo.rows[0]);
-  const billInfo = await db.query("SELECT * FROM bill_list WHERE bill_id=$1", [
-    newDebt.which_bill,
-  ]);
-  console.log("Bill info", billInfo.rows[0]);
-  const debtFrom = await db.query(
+
+  //Debtor information
+  //formerly, "emailTo"
+  const debtorQueryResults = await db.query(
     "SELECT * FROM contacts WHERE contact_id=$1",
-    [billInfo.rows[0].who_paid]
+    [newDebt.who_owes]
   );
-  console.log("Who is owed", debtFrom);
-  //consider moving line 222 to line 19 -- not sure what line that was :[
+  const debtor = debtorQueryResults.rows[0];
+  if (!debtor) {
+    res.status(404).end();
+  }
+  //info from the associated bill
+  const billQueryResults = await db.query(
+    "SELECT * FROM bill_list WHERE bill_id=$1",
+    [newDebt.which_bill]
+  );
+  const billInfo = billQueryResults.rows[0];
+  if (!billInfo) {
+    res.status(404).end();
+  }
+
+  // Who paid that bill, the 'payee'
+  //formerly debtFrom
+  const payeeQueryResults = await db.query(
+    "SELECT * FROM contacts WHERE contact_id=$1",
+    [billInfo.who_paid]
+  );
+  const payeeInfo = payeeQueryResults.rows[0];
+  if (!payeeInfo) {
+    res.status(404).end();
+  }
+  //consider moving line 222 to line 19
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
-    to: `${emailTo.rows[0].email}`, // Change to your recipient
+    to: `${debtor.email}`, // Change to your recipient
     from: "col.snake.butler@gmail.com", // Verified sender email
     subject: "You have a new debt to pay",
-    text: `Hello ${emailTo.rows[0].first_name} ${emailTo.rows[0].last_name}, You have a new debt to pay! You owe ${debtFrom.rows[0].first_name} ${debtFrom.rows[0].last_name} $${newDebt.how_much}. ${debtFrom.rows[0].first_name} prefers to be paid ${debtFrom.rows[0].preferred_payment_method}. Feel free to contact ${debtFrom.rows[0].first_name} at ${debtFrom.rows[0].email}. Debts Notes: ${newDebt.debt_notes} Bill Notes: ${billInfo.rows[0].bill_notes} -TabSplitter`,
+    text: `Hello ${debtor.first_name} ${debtor.last_name}, You have a new debt to pay! You owe ${payeeInfo.first_name} ${payeeInfo.last_name} $${newDebt.how_much}. ${payeeInfo.first_name} prefers to be paid ${payeeInfo.preferred_payment_method}. Feel free to contact ${payeeInfo.first_name} at ${payeeInfo.email}. Debts Notes: ${newDebt.debt_notes} Bill Notes: ${billInfo.bill_notes} -TabSplitter`,
 
-    html: `Hello ${emailTo.rows[0].first_name} ${emailTo.rows[0].last_name}, <br/>You have a new debt to pay! <br/> You owe ${debtFrom.rows[0].first_name} ${debtFrom.rows[0].last_name} <b>$${newDebt.how_much}</b>. ${debtFrom.rows[0].first_name} prefers to be paid via <b>${debtFrom.rows[0].preferred_payment_method}</b>. <br/>Feel free to contact ${debtFrom.rows[0].first_name} at ${debtFrom.rows[0].email}.<br/> Debts Notes: ${newDebt.debt_notes}<br/>Bill Notes: ${billInfo.rows[0].bill_notes}<br/><br/>-TabSplitter`,
+    html: `Hello ${debtor.first_name} ${debtor.last_name}, <br/>You have a new debt to pay! <br/> You owe ${payeeInfo.first_name} ${payeeInfo.last_name} <b>$${newDebt.how_much}</b>. ${payeeInfo.first_name} prefers to be paid via <b>${payeeInfo.preferred_payment_method}</b>. <br/>Feel free to contact ${payeeInfo.first_name} at ${payeeInfo.email}.<br/> Debts Notes: ${newDebt.debt_notes}<br/>Bill Notes: ${billInfo.bill_notes}<br/><br/>-TabSplitter`,
   };
   sgMail
     .send(msg)
@@ -343,9 +360,10 @@ app.put("/db/bills/:bill_id", cors(), async (req, res) => {
     updateBill.location,
   ];
   try {
-    const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
-    res.send(updated.rows[0]);
+    const { rows: updated } = await db.query(query, values);
+    const fullUpdatedBill = await getFullBill(updated[0]);
+    console.log(updated[0], fullUpdatedBill);
+    res.send(fullUpdatedBill);
   } catch (e) {
     console.log(e);
     return res.status(400).json({ e });
@@ -378,9 +396,14 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
     updateDebt.subtotal,
   ];
   try {
-    const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
-    res.send(updated.rows[0]);
+    const results = await db.query(query, values);
+    const { rows: joinedDebts } = await db.query(
+      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id WHERE debt_id = $1",
+      [debtId]
+    );
+    const joinedDebt = joinedDebts[0]
+    console.logjoinedDebt
+    res.send(joinedDebt);
   } catch (e) {
     console.log(e);
     return res.status(400).json({ e });
@@ -397,3 +420,29 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+
+// ==========
+// Helper Functions
+
+/// Takes as input a bill object, populates with debts and payee
+const getFullBill = async (input) => {
+  let bill = {...input}
+
+  const { rows: debts } = await db.query(
+    //get all from debt_list items for each bill
+    //debt_list has been joined with contacts, by who_owes, where debt_list bill is THAT bill
+    "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id WHERE debt_list.which_bill = $1;",
+    [bill.bill_id]
+  );
+  bill.debts = debts;
+
+  const { rows: payees } = await db.query(
+    //Gets all the contact info for the bill payee
+    "SELECT * FROM contacts WHERE contact_id = $1;",
+    [bill.who_paid]
+  );
+  bill.payee = payees[0];
+
+  return bill;
+}

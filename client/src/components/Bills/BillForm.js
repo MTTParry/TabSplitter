@@ -15,6 +15,8 @@ const BillForm = (props) => {
 
   // Initial State
   const [bill, setBill] = useState(initialBill || EmptyBill);
+  const [showBillAddedMsg, setShowBillAddedMsg] = useState();
+  const [prevBillInfo, setPrevBillInfo] = useState();
 
   //create functions that handle the event of the user typing into the form
   const handleChange = (event) => {
@@ -47,7 +49,6 @@ const BillForm = (props) => {
         })
         .then((data) => {
           console.log("From the bill add ", data);
-          // props.addPost(data);
         });
     } catch (e) {
       console.log("bill Post error:", e.message);
@@ -67,7 +68,7 @@ const BillForm = (props) => {
         })
         .then((data) => {
           console.log("The updated bill info: ", data);
-          props.updateContact(data);
+          props.onSave(data);
         });
     } catch (e) {
       console.log("bill Put error", e.message);
@@ -81,6 +82,9 @@ const BillForm = (props) => {
         updateBillInfo(bill);
       } else {
         postNewBill(bill);
+        setPrevBillInfo(bill.full_total);
+        setShowBillAddedMsg(true);
+        setBill(EmptyBill);
       }
     } catch (e) {
       console.log("add/submit button error", e.message);
@@ -89,7 +93,7 @@ const BillForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>New Bill</h3>
+      <h3>{!bill.bill_id ? "Add New Bill" : "Edit Bill"}</h3>
       <fieldset>
         <label>Subtotal: $</label>
         <input
@@ -146,6 +150,11 @@ const BillForm = (props) => {
           value={bill.transaction_date}
           onChange={handleChange}
         />
+        {!bill.bill_id ? (
+          ""
+        ) : (
+          <i> Previous Date: {bill.transaction_date.slice(0, 10)}</i>
+        )}
         <br />
         <label>Where: </label>
         <input
@@ -207,6 +216,13 @@ const BillForm = (props) => {
       <button type="submit" className="addbutton">
         {!bill.bill_id ? "Add Bill" : "Save Changes"}
       </button>
+      <div>
+        {showBillAddedMsg ? (
+          <p className="post_success">${prevBillInfo} Bill Added!</p>
+        ) : (
+          ""
+        )}
+      </div>
     </form>
   );
 };
