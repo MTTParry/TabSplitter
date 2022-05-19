@@ -364,9 +364,14 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
     updateDebt.subtotal,
   ];
   try {
-    const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
-    res.send(updated.rows[0]);
+    const results = await db.query(query, values);
+    const { rows: joinedDebts } = await db.query(
+      "SELECT * FROM debt_list JOIN contacts ON debt_list.who_owes = contacts.contact_id JOIN bill_list ON debt_list.which_bill = bill_list.bill_id WHERE debt_id = $1",
+      [debtId]
+    );
+    const joinedDebt = joinedDebts[0]
+    console.logjoinedDebt
+    res.send(joinedDebt);
   } catch (e) {
     console.log(e);
     return res.status(400).json({ e });
