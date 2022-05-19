@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import BillDropDown from "../DropDowns/BillDropList";
 import EmptyDebt from "./EmptyDebt";
 import EmptyBill from "../Bills/EmptyBill";
+import { GetDebtTotal } from "../helper/FindDebtTotal";
 
 const DebtForm = (props) => {
   //An initial student if there is one in props
@@ -21,26 +22,32 @@ const DebtForm = (props) => {
     setDebt((debt) => ({ ...debt, [name]: value }));
 
     fetch(`http://localhost:5005/db/bill/${value}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     })
-    .then((response) => {
-      return response.json()
-    })
-    .then((data) => {
-      console.log("Did this return the bill?", data);
-      setBill(data)
-    })
-    .catch((err) => {
-      console.log("Error fetching Bill: ", err);
-      setBill(EmptyBill)
-    })
-  }
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Did this return the bill?", data);
+        setBill(data);
+      })
+      .catch((err) => {
+        console.log("Error fetching Bill: ", err);
+        setBill(EmptyBill);
+      });
+  };
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setDebt((debt) => ({ ...debt, [name]: value }));
+    setDebt((debt) => {
+      let tempDebt = { ...debt, [name]: value };
+
+      tempDebt.how_much = GetDebtTotal(bill, tempDebt.subtotal);
+
+      return tempDebt;
+    });
     console.log("Contact, client side: " + name + ", value: " + value);
   };
 
@@ -106,6 +113,24 @@ const DebtForm = (props) => {
     <form onSubmit={handleSubmit}>
       <h3>{!debt.debt_id ? "New Debt" : "Edit Debt"}</h3>
       <fieldset>
+        <BillDropDown
+          label="Which Bill:"
+          id="add-debt-which-bill"
+          name="which_bill"
+          className="debt_inputs"
+          required
+          value={debt.which_bill}
+          handleChange={handleBillChange}
+        />
+        <ContactDropDown
+          label="Who owes:"
+          id="add-debt-who-owes"
+          name="who_owes"
+          className="debt_inputs"
+          required
+          value={debt.who_owes}
+          handleChange={handleChange}
+        />
         <label>Subtotal: $</label>
         <input
           type="number"
@@ -118,36 +143,7 @@ const DebtForm = (props) => {
           name="subtotal"
         />
         <br />
-        <label>Total Amount: $</label>
-        <input
-          type="number"
-          id="add-debt-tax_amount"
-          className="debt_inputs"
-          placeholder="0"
-          value={debt.how_much}
-          onChange={handleChange}
-          name="how_much"
-        />
-        <br />
-        <BillDropDown
-          label="Which Bill:"
-          id="add-debt-which-bill"
-          name="which_bill"
-          className="debt_inputs"
-          required
-          value={debt.which_bill}
-          handleChange={handleBillChange}
-        />
-        <br />
-        <ContactDropDown
-          label="Who owes:"
-          id="add-debt-who-owes"
-          name="who_owes"
-          className="debt_inputs"
-          required
-          value={debt.who_owes}
-          handleChange={handleChange}
-        />
+        Total Amount: ${debt.how_much}
         <br />
         <label>Have they been paid back? </label>
         <input
