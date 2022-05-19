@@ -10,7 +10,6 @@ import DebtList from "./components/Debts/DebtList";
 import ContactForm from "./components/Contacts/ContactForm";
 import BillForm from "./components/Bills/BillForm";
 import DebtForm from "./components/Debts/DebtForm";
-import { useEffect } from "react";
 
 function App() {
   return (

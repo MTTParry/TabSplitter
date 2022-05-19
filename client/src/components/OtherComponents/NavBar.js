@@ -1,11 +1,10 @@
 import React from "react";
-import { Nav, NavLink, Bars, NavMenu } from "./NavbarElements";
+import { Nav, NavLink, NavMenu } from "./NavbarElements";
 
 const NavBar = () => {
   return (
     <>
       <Nav>
-    
         <NavMenu>
           <NavLink exact to="/">
             TabSplitter
