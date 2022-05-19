@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ContactDropDown from "../DropDowns/ContactDropList";
 import BillDropDown from "../DropDowns/BillDropList";
 import EmptyDebt from "./EmptyDebt";
+import EmptyBill from "../Bills/EmptyBill";
 
 const DebtForm = (props) => {
   //An initial student if there is one in props
@@ -9,10 +10,33 @@ const DebtForm = (props) => {
 
   // Initial State
   const [debt, setDebt] = useState(initialDebt || EmptyDebt);
+  const [bill, setBill] = useState(EmptyBill);
   const [showDebtAddedMsg, setShowDebtAddedMsg] = useState();
   const [prevDebtInfo, setPrevDebtInfo] = useState();
 
   //create functions that handle the event of the user typing into the form
+  const handleBillChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setDebt((debt) => ({ ...debt, [name]: value }));
+
+    fetch(`http://localhost:5005/db/bill/${value}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      console.log("Did this return the bill?", data);
+      setBill(data)
+    })
+    .catch((err) => {
+      console.log("Error fetching Bill: ", err);
+      setBill(EmptyBill)
+    })
+  }
+
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -112,7 +136,7 @@ const DebtForm = (props) => {
           className="debt_inputs"
           required
           value={debt.which_bill}
-          handleChange={handleChange}
+          handleChange={handleBillChange}
         />
         <br />
         <ContactDropDown

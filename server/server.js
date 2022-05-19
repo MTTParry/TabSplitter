@@ -45,6 +45,21 @@ app.get("/db/bills", cors(), async (req, res) => {
   }
 });
 
+//simple bills
+app.get("/db/bill/:bill_id", cors(), async (req, res) => {
+  const bill_id = req.params.bill_id;
+  try {
+    const { rows: bills } = await db.query(
+      "SELECT * FROM bill_list WHERE bill_id=$1",
+      [bill_id]
+    );
+    res.send(bills[0]);
+  } catch (e) {
+    console.log(e);
+    return res.status(404).json({ e });
+  }
+});
+
 // FULL BILL LIST
 // for the get, the bill table is joined with the contacts for display purposes
 // this way the list can show "<this person (contact.firstname)> paid <this much(bill_list.full_total)>"
