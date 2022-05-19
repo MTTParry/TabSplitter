@@ -18,13 +18,13 @@ SET row_security = off;
 
 DROP DATABASE "tabSplitter";
 --
--- Name: tabSplitter; Type: DATABASE; Schema: -; Owner: mttparry
+-- Name: tabSplitter; Type: DATABASE; Schema: -; Owner: postgres
 --
 
 CREATE DATABASE "tabSplitter" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'C';
 
 
-ALTER DATABASE "tabSplitter" OWNER TO mttparry;
+ALTER DATABASE "tabSplitter" OWNER TO postgres;
 
 \connect "tabSplitter"
 
@@ -44,7 +44,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: bill_list; Type: TABLE; Schema: public; Owner: mttparry
+-- Name: bill_list; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.bill_list (
@@ -64,10 +64,10 @@ CREATE TABLE public.bill_list (
 );
 
 
-ALTER TABLE public.bill_list OWNER TO mttparry;
+ALTER TABLE public.bill_list OWNER TO postgres;
 
 --
--- Name: bill_list_bill_id_seq; Type: SEQUENCE; Schema: public; Owner: mttparry
+-- Name: bill_list_bill_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.bill_list_bill_id_seq
@@ -79,17 +79,17 @@ CREATE SEQUENCE public.bill_list_bill_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_list_bill_id_seq OWNER TO mttparry;
+ALTER TABLE public.bill_list_bill_id_seq OWNER TO postgres;
 
 --
--- Name: bill_list_bill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mttparry
+-- Name: bill_list_bill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.bill_list_bill_id_seq OWNED BY public.bill_list.bill_id;
 
 
 --
--- Name: contacts; Type: TABLE; Schema: public; Owner: mttparry
+-- Name: contacts; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.contacts (
@@ -102,10 +102,10 @@ CREATE TABLE public.contacts (
 );
 
 
-ALTER TABLE public.contacts OWNER TO mttparry;
+ALTER TABLE public.contacts OWNER TO postgres;
 
 --
--- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: mttparry
+-- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 ALTER TABLE public.contacts ALTER COLUMN contact_id ADD GENERATED ALWAYS AS IDENTITY (
@@ -119,7 +119,7 @@ ALTER TABLE public.contacts ALTER COLUMN contact_id ADD GENERATED ALWAYS AS IDEN
 
 
 --
--- Name: debt_list; Type: TABLE; Schema: public; Owner: mttparry
+-- Name: debt_list; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.debt_list (
@@ -134,10 +134,10 @@ CREATE TABLE public.debt_list (
 );
 
 
-ALTER TABLE public.debt_list OWNER TO mttparry;
+ALTER TABLE public.debt_list OWNER TO postgres;
 
 --
--- Name: debt_list_debt_id_seq; Type: SEQUENCE; Schema: public; Owner: mttparry
+-- Name: debt_list_debt_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.debt_list_debt_id_seq
@@ -149,31 +149,31 @@ CREATE SEQUENCE public.debt_list_debt_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.debt_list_debt_id_seq OWNER TO mttparry;
+ALTER TABLE public.debt_list_debt_id_seq OWNER TO postgres;
 
 --
--- Name: debt_list_debt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mttparry
+-- Name: debt_list_debt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.debt_list_debt_id_seq OWNED BY public.debt_list.debt_id;
 
 
 --
--- Name: bill_list bill_id; Type: DEFAULT; Schema: public; Owner: mttparry
+-- Name: bill_list bill_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.bill_list ALTER COLUMN bill_id SET DEFAULT nextval('public.bill_list_bill_id_seq'::regclass);
 
 
 --
--- Name: debt_list debt_id; Type: DEFAULT; Schema: public; Owner: mttparry
+-- Name: debt_list debt_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.debt_list ALTER COLUMN debt_id SET DEFAULT nextval('public.debt_list_debt_id_seq'::regclass);
 
 
 --
--- Data for Name: bill_list; Type: TABLE DATA; Schema: public; Owner: mttparry
+-- Data for Name: bill_list; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, who_paid, paid_up, bill_notes, creationtimestamp, full_total, tax_total, tip_total, location) FROM stdin;
@@ -187,7 +187,7 @@ COPY public.bill_list (bill_id, transaction_date, subtotal, tax_rate, tip_rate, 
 
 
 --
--- Data for Name: contacts; Type: TABLE DATA; Schema: public; Owner: mttparry
+-- Data for Name: contacts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.contacts (contact_id, first_name, last_name, email, preferred_payment_method, creation_timestamp) FROM stdin;
@@ -205,7 +205,7 @@ COPY public.contacts (contact_id, first_name, last_name, email, preferred_paymen
 
 
 --
--- Data for Name: debt_list; Type: TABLE DATA; Schema: public; Owner: mttparry
+-- Data for Name: debt_list; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.debt_list (debt_id, which_bill, how_much, who_owes, debt_paid_up, debt_notes, creationtimestamp, subtotal) FROM stdin;
@@ -242,28 +242,28 @@ COPY public.debt_list (debt_id, which_bill, how_much, who_owes, debt_paid_up, de
 
 
 --
--- Name: bill_list_bill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
+-- Name: bill_list_bill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.bill_list_bill_id_seq', 12, true);
 
 
 --
--- Name: contacts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
+-- Name: contacts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.contacts_id_seq', 34, true);
 
 
 --
--- Name: debt_list_debt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mttparry
+-- Name: debt_list_debt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.debt_list_debt_id_seq', 51, true);
 
 
 --
--- Name: bill_list bill_list_pkey; Type: CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: bill_list bill_list_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.bill_list
@@ -271,7 +271,7 @@ ALTER TABLE ONLY public.bill_list
 
 
 --
--- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.contacts
@@ -279,7 +279,7 @@ ALTER TABLE ONLY public.contacts
 
 
 --
--- Name: debt_list debt_list_pkey; Type: CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: debt_list debt_list_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.debt_list
@@ -287,7 +287,7 @@ ALTER TABLE ONLY public.debt_list
 
 
 --
--- Name: bill_list bill_list_who_paid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: bill_list bill_list_who_paid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.bill_list
@@ -295,7 +295,7 @@ ALTER TABLE ONLY public.bill_list
 
 
 --
--- Name: debt_list debt_list_which_bill_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: debt_list debt_list_which_bill_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.debt_list
@@ -303,7 +303,7 @@ ALTER TABLE ONLY public.debt_list
 
 
 --
--- Name: debt_list debt_list_who_owes_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mttparry
+-- Name: debt_list debt_list_who_owes_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.debt_list
