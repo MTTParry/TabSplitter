@@ -204,7 +204,7 @@ const BillForm = (props) => {
           onChange={handleChange}
         />
       </fieldset>
-      <button type="submit">
+      <button type="submit" className="addbutton">
         {!bill.bill_id ? "Add Bill" : "Save Changes"}
       </button>
     </form>

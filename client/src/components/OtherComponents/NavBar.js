@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <>
       <Nav>
-        <Bars />
+    
         <NavMenu>
           <NavLink exact to="/">
             TabSplitter

@@ -156,7 +156,7 @@ const DebtForm = (props) => {
           onChange={handleChange}
         />
       </fieldset>
-      <button type="submit">
+      <button type="submit" className="addbutton">
         {!debt.debt_id ? "Add Debt" : "Save Changes"}
       </button>
     </form>

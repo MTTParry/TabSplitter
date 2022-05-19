@@ -94,7 +94,8 @@ function BillList() {
                   Total: <b>{bill.full_total}</b>
                 </li>
                 <li>
-                  Has this person been fully paid back? <b>{bill.paid_up}</b>
+                  Has this person been fully paid back?{" "}
+                  <b>{bill.paid_up.toString()}</b>
                 </li>
                 <li>
                   Notes: <b>{bill.bill_notes}</b>
@@ -119,7 +120,6 @@ function BillList() {
                 DELETE bill
               </button>
               <div className="note">CAREFUL: Delete cannot be undone.</div>
-              <hr />
             </div>
           );
         }
