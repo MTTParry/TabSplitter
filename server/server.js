@@ -211,18 +211,31 @@ app.post("/db/debts", cors(), async (req, res) => {
       newDebt.subtotal,
     ]
   );
-  console.log("results blah blah", result.rows[0].debt_id);
+  // console.log("results blah blah", result.rows[0].debt_id);
+  // const debtInfo = result.rows[0];
   //query who_owes to get "to"
-  //query which.bill -> who_paid => all info
-  //async function
-  //move line 222 to line 19
+  const emailTo = await db.query("SELECT * FROM contacts WHERE contact_id=$1", [
+    newDebt.who_owes,
+  ]);
+  // console.log("Debtor", emailTo.rows[0]);
+  const billInfo = await db.query("SELECT * FROM bill_list WHERE bill_id=$1", [
+    newDebt.which_bill,
+  ]);
+  console.log("Bill info", billInfo.rows[0]);
+  const debtFrom = await db.query(
+    "SELECT * FROM contacts WHERE contact_id=$1",
+    [billInfo.rows[0].who_paid]
+  );
+  console.log("Who is owed", debtFrom);
+  //consider moving line 222 to line 19 -- not sure what line that was :[
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
-    to: "michaela.t.t.parry@gmail.com", // Change to your recipient
+    to: `${emailTo.rows[0].email}`, // Change to your recipient
     from: "col.snake.butler@gmail.com", // Verified sender email
-    subject: "Test email",
-    text: "and easy to do anywhere, even with Node.js",
-    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    subject: "You have a new debt to pay",
+    text: `Hello ${emailTo.rows[0].first_name} ${emailTo.rows[0].last_name}, You have a new debt to pay! You owe ${debtFrom.rows[0].first_name} ${debtFrom.rows[0].last_name} $${newDebt.how_much}. ${debtFrom.rows[0].first_name} prefers to be paid ${debtFrom.rows[0].preferred_payment_method}. Feel free to contact ${debtFrom.rows[0].first_name} at ${debtFrom.rows[0].email}. Debts Notes: ${newDebt.debt_notes} Bill Notes: ${billInfo.rows[0].bill_notes} -TabSplitter`,
+
+    html: `Hello ${emailTo.rows[0].first_name} ${emailTo.rows[0].last_name}, <br/>You have a new debt to pay! <br/> You owe ${debtFrom.rows[0].first_name} ${debtFrom.rows[0].last_name} <b>$${newDebt.how_much}</b>. ${debtFrom.rows[0].first_name} prefers to be paid via <b>${debtFrom.rows[0].preferred_payment_method}</b>. <br/>Feel free to contact ${debtFrom.rows[0].first_name} at ${debtFrom.rows[0].email}.<br/> Debts Notes: ${newDebt.debt_notes}<br/>Bill Notes: ${billInfo.rows[0].bill_notes}<br/><br/>-TabSplitter`,
   };
   sgMail
     .send(msg)
@@ -230,7 +243,7 @@ app.post("/db/debts", cors(), async (req, res) => {
       console.log("Email sent");
     })
     .catch((error) => {
-      console.error(error);
+      console.error("API error:", error);
     });
 
   console.log(result.rows[0]);
