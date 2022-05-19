@@ -23,6 +23,17 @@ app.use(cors());
 app.use(auth(config));
 app.use(express.json());
 
+//auth0
+app.get("/api/me", (req, res) => {
+  console.log(req.oidc.isAuthenticated());
+  if (req.oidc.isAuthenticated()) {
+    console.log(req.oidc.user);
+    res.json(req.oidc.user);
+  } else {
+    res.status(401).json({ error: "Error in the auth0" });
+  }
+});
+
 //API stuff
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
@@ -426,7 +437,7 @@ app.put("/db/debts/:debt_id", cors(), async (req, res) => {
 //creates an endpoint for the route /api
 //If this is higher up then none of the requests work
 app.get("*", (req, res) => {
-  console.log(req.oidc.isAuthenticated());
+  // console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
 
