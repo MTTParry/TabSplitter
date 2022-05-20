@@ -126,17 +126,17 @@ You'll need to install Node v16 or above.
  touch .env
 ```
 
-   6.1. Copy the information from .env.example into your .env file
+7. Copy the information from .env.example into your .env file
   
-   6.2. Replace the information in quotes on lines 1, 3, 5, 7, and 8
+8. In your .env, replace the information in quotes on lines 1, 3, 5, 7, and 8
 
-7.  In the root folder, use the following command to run the dev using nodemon:
+9.  In the root folder, use the following command to run the dev using nodemon:
 
 ```sh
 npm run dev
 ```
 
-8. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
+10. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
 
 #### Set Up React client for `auth0`
 
