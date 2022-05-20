@@ -156,3 +156,35 @@ fieldset .input {
   font-size: 1.25em;
   margin-top: 15px;
 }
+
+/* Login Button */
+.login a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: Freight Sans, sans-serif;
+  color: #fff;
+  height: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  padding-top: 15%;
+  padding-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  .login a {
+    display: block;
+    align-items: center;
+    text-align: right;
+    text-decoration: none;
+    font-family: Freight Sans, sans-serif;
+    color: #fff;
+    padding: 0 0 0 0;
+    height: 100%;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bold;
+    margin-left: 50%;
+    margin-top: 5%;
+  }
+}
