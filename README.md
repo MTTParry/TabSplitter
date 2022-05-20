@@ -114,7 +114,7 @@ You'll need to install Node v16 or above.
 
 5. Database setup:
 
-   1. Inside of the server folder, run the following command to restore the database dump file:
+   - Inside of the server folder, run the following command to restore the database dump file:
 
    ```sh
    psql -U postgres -f db.sql
@@ -122,19 +122,19 @@ You'll need to install Node v16 or above.
 
 6. Set up your .env file. Without this file, the program will not run. Run the following command in the server folder:
 
-```sh
- touch .env
-```
+  ```sh
+   touch .env
+  ```
 
-7. Copy the information from .env.example into your .env file
+  - Copy the information from .env.example into your .env file
   
-8. In your .env, replace the information in quotes on lines 1, 3, 5, 7, and 8
+  - In your .env, replace the information in quotes on lines 1, 3, 5, 7, and 8
 
-9.  In the root folder, use the following command to run the dev using nodemon:
+7.  In the root folder, use the following command to run the dev using nodemon:
 
-```sh
-npm run dev
-```
+  ```sh
+  npm run dev
+  ```
 
 10. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
 
