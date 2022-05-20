@@ -12,7 +12,7 @@ const NavBurger = ({
     // <BurgerMenu pageWrapId={pageWrapId} outerContainerId={outerContainerId}>
     <BurgerMenu >
       <Link className="menu-item" exact to="/">
-        TabSplitter Home
+        TabSplitter
       </Link>
 
       <Link className="menu-item" exact to="/contacts">
