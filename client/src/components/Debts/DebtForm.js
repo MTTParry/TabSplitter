@@ -21,7 +21,7 @@ const DebtForm = (props) => {
     const value = event.target.value;
     setDebt((debt) => ({ ...debt, [name]: value }));
 
-    fetch(`http://localhost:5005/db/bill/${value}`, {
+    fetch(`/db/bill/${value}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

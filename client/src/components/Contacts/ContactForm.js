@@ -40,14 +40,11 @@ const ContactForm = (props) => {
   //A function to handle the PUT request
   const updateContactInfo = async (existingContact) => {
     try {
-      return fetch(
-        `/${existingContact.contact_id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(existingContact),
-        }
-      )
+      return fetch(`db/contacts/${existingContact.contact_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(existingContact),
+      })
         .then((response) => {
           return response.json();
         })
@@ -135,7 +132,13 @@ const ContactForm = (props) => {
       <button type="submit" className="addbutton">
         {!contact.contact_id ? "Add Contact" : "Save Changes"}
       </button>
-      <div>{showContactAddedMsg ? <p className="post_success">{prevContactName} Added!</p> : ""}</div>
+      <div>
+        {showContactAddedMsg ? (
+          <p className="post_success">{prevContactName} Added!</p>
+        ) : (
+          ""
+        )}
+      </div>
     </form>
   );
 };
