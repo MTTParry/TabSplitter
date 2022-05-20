@@ -94,19 +94,25 @@ You'll need to install Node v16 or above.
    git clone https://github.com/MTTParry/TabSplitter.git tabSplitter
    ```
 
-2. Install all NPM packages using this in the root directory:
+2. Clean the folder from the owner git by running this command in the root folder:
+
+   ```sh
+   rm -rf .git
+   ```
+
+3. Install all NPM packages using this in the root directory:
 
    ```sh
    npm install
    ```
 
-3. Also install the the express-openid-connect package for Auth0:
+4. Also install the the express-openid-connect package for Auth0:
 
    ```sh
    npm --save install express express-openid-connect
    ```
 
-4. Database setup:
+5. Database setup:
 
    1. Inside of the server folder, run the following command to restore the database dump file:
 
@@ -114,20 +120,16 @@ You'll need to install Node v16 or above.
    psql -U postgres -f db.sql
    ```
 
-5. Clean the folder from the owner git by running this command in the root folder:
-   ```sh
-   rm -rf .git
-   ```
 6. Set up your .env file. Without this file, the program will not run. Run the following command in the server folder:
 
 ```sh
  touch .env
 ```
 
-1. Copy the information from .env.example into your .env file
-2. Replace the information in quotes on lines 1, 3, 5, 7, and 8
+i. Copy the information from .env.example into your .env file
+ii. Replace the information in quotes on lines 1, 3, 5, 7, and 8
 
-3. In the root folder, use the following command to run the dev using nodemon:
+7.  In the root folder, use the following command to run the dev using nodemon:
 
 ```sh
 npm run dev
