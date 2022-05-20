@@ -67,24 +67,24 @@ It also uses
 
 ### Prerequisites
 
-**Docker**
-
-This project relies on Docker for to run the PostgreSQL server for registered users. To use those features, you must install Docker first before continuing.
-
-Windows:
-
-- Follow Microsoft's instructions to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [Docker](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers#install-docker-desktop).
-
-MacOS:
-
-- Use [Homebrew](https://docs.brew.sh/Installation): `brew install --cask docker`
-- [Follow the instructions on the Docker website](https://www.docker.com/)
-
-Launch Docker Desktop once it is installed.
-
 **Node**
 
-You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm) is highly recommended.
+You'll need to install Node v16 or above.
+
+**SendGrid**
+
+1. An api key from SendGrid by Twilio
+2. You will also want to verify an email for sending the emails. (Put your verified email address on line 278 of server.js, replacing the fake email)
+
+**Auth0**
+
+1. Go to Applications
+2. Click "+ Create Application"
+3. Name it and select "Regular Web Applications"
+4. "Create Application"
+5. Select "Node.js (Express)"
+6. Select "Integrate Now" under "I want to integrate with my app"
+7. This will give you your CLIENTID and ISSUER (issuerBaseURL) for your .env file (see step 6 below).
 
 ### Installation
 
@@ -118,27 +118,22 @@ You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm)
    ```sh
    rm -rf .git
    ```
-6. Set up your .env file. Without this file, the program will not run.
-7. You will need:
-8. An api key from SendGrid by Twilio
-9. You will also want to verify an email for sending the emails. (Put your verified email address on line 278 of server.js, replacing the fake email)
-10. An account with Auth0
-11. Run the following command in the server folder:
+6. Set up your .env file. Without this file, the program will not run. Run the following command in the server folder:
 
 ```sh
  touch .env
 ```
 
-3. Copy the information from .env.example into your .env file
-4. Replace the information in quotes on lines 1, 3, 5, 7, and 8
+1. Copy the information from .env.example into your .env file
+2. Replace the information in quotes on lines 1, 3, 5, 7, and 8
 
-5. In the root folder, use the following command to run the dev using nodemon:
+3. In the root folder, use the following command to run the dev using nodemon:
 
 ```sh
 npm run dev
 ```
 
-7. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
+8. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
 
 #### Set Up React client for `auth0`
 
