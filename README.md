@@ -36,22 +36,22 @@ When a debt is added, an email is sent to the person who owes that debt, informi
   - User inputs the subtotal, the tax amount, and the tip percentage
   - TabSplitter calculate the tax rate, the tip amount, and the full amount
   - User also inputs when the bill occured, where it happened, who paid, has the bill been paid back, and any additional notes they want to include
-   - Example: John Doe paid a bill at Zazie's on 2022-04-18.
-      - The subtotal was $101.4, the tax amount was $8.74, and there was no tip (0%)
-      - The tax rate is 8.62%, the tip amount is $0, and the Total is $110.14.
-      - Has John been paid back? False.
-      - Notes: Zazie's doesn't accept tips.
+  - Example: John Doe paid a bill at Zazie's on 2022-04-18.
+    - The subtotal was $101.4, the tax amount was $8.74, and there was no tip (0%)
+    - The tax rate is 8.62%, the tip amount is $0, and the Total is $110.14.
+    - Has John been paid back? False.
+    - Notes: Zazie's doesn't accept tips.
 - Debts
   - User selects which bill the debt is associated with, as well as inputting the subtotal (menu price of the person's individual items)
   - TabSplitter calculates their total
     - This includes their subtotal, as well as their portion of tax and tip
   - User also inputs who owes this debt, have they been paid back, and any additional notes they want to include
     - This is usually what the person ordered/ate, as well as the base prices for those items, or other information like if it was an even split
-   - Example: Jane Doe owes John Doe from the bill on 2022-04-18, at Zazie's.
-      - Her subtotal is $43.95
-      - Her total debt is $47.74
-      - She has not paid back this debt yet.
-      - Notes: Jane ordered 2 eggs(29), 1 mocha (6.95), 1 pancake (24/3; she split an order of 3 pancakes with two other people)
+  - Example: Jane Doe owes John Doe from the bill on 2022-04-18, at Zazie's.
+    - Her subtotal is $43.95
+    - Her total debt is $47.74
+    - She has not paid back this debt yet.
+    - Notes: Jane ordered 2 eggs(29), 1 mocha (6.95), 1 pancake (24/3; she split an order of 3 pancakes with two other people)
   - When a debt is submitted, an email is sent to the person who owes that debt, informing them about what they owe, who they owe, and how to pay them back
 
 ## Built With
@@ -89,21 +89,24 @@ You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm)
 ### Installation
 
 1. In your terminal, go to where you would like the to install this repo. Once there, run the command:
+
    ```sh
    git clone https://github.com/MTTParry/TabSplitter.git tabSplitter
    ```
 
 2. Install all NPM packages using this in the root directory:
+
    ```sh
    npm install
    ```
 
-  1. Also install the the express-openid-connect package for Auth0: 
-     ```sh
-     npm --save install express express-openid-connect
-     ```
+3. Also install the the express-openid-connect package for Auth0:
 
-3. Database setup:
+   ```sh
+   npm --save install express express-openid-connect
+   ```
+
+4. Database setup:
 
    1. Inside of the server folder, run the following command to restore the database dump file:
 
@@ -111,24 +114,31 @@ You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm)
    psql -U postgres -f db.sql
    ```
 
-4. Clean the folder from the owner git by running this command in the root folder:
+5. Clean the folder from the owner git by running this command in the root folder:
    ```sh
    rm -rf .git
    ```
-5. Set up your .env file. Without this file, the program will not run. You will need:
-  1. An api key from SendGrid by Twilio
-    1. You will also want to verify an email for sending the emails. (Put your verified email address on line 278 of server.js, replacing the fake email)
-  2. An account with Auth0
-
-
-
-Start the app and view it at <http://localhost:3000> by using:
+6. Set up your .env file. Without this file, the program will not run.
+7. You will need:
+8. An api key from SendGrid by Twilio
+9. You will also want to verify an email for sending the emails. (Put your verified email address on line 278 of server.js, replacing the fake email)
+10. An account with Auth0
+11. Run the following command in the server folder:
 
 ```sh
-npm start
+ touch .env
 ```
 
-Shut Down the Express and React development servers using `Ctrl-C` .
+3. Copy the information from .env.example into your .env file
+4. Replace the information in quotes on lines 1, 3, 5, 7, and 8
+
+5. In the root folder, use the following command to run the dev using nodemon:
+
+```sh
+npm run dev
+```
+
+7. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
 
 #### Set Up React client for `auth0`
 
