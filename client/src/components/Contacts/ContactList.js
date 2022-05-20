@@ -8,7 +8,7 @@ function ContactList() {
   const [editContactById, setEditContactById] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/db/contacts")
+    fetch("/db/contacts")
       .then((response) => response.json())
       .then((contactData) => {
         setContacts(contactData);
@@ -57,7 +57,7 @@ function ContactList() {
   };
 
   // console.log("editing contact by id", editContactById);
-  
+
   return (
     <div className="lists">
       <h2> Contacts List </h2>

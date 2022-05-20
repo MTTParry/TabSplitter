@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
-import Login from "../Auth/login";
+import Login from "../login_out/login";
 
 const NavBar = () => {
   const [user, setUser] = useState(undefined);
