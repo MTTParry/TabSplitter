@@ -23,6 +23,9 @@ app.use(cors());
 app.use(auth(config));
 app.use(express.json());
 
+// WARNING: This was not on heroku1 branch, may be an error
+app.use(express.static(REACT_BUILD_DIR));
+
 //auth0
 app.get("/api/me", (req, res) => {
   console.log(req.oidc.isAuthenticated());
@@ -440,8 +443,6 @@ app.get("*", (req, res) => {
   // console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
-// WARNING: This was not on heroku1 branch, may be an error
-app.use(express.static(REACT_BUILD_DIR));
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
