@@ -3,11 +3,11 @@ const Login = ({ user }) => {
     <nav>
       {!user ? (
         <div className="login">
-          <a href="http://localhost:5005/login">Login</a>
+          <a href="/login">Login</a>
         </div>
       ) : (
         <div className="login">
-          <a href="http://localhost:5005/logout">Logout of {user.name}</a>
+          <a href="/logout">Logout of {user.name}</a>
         </div>
       )}
     </nav>
