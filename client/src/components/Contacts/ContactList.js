@@ -18,12 +18,9 @@ function ContactList() {
   //  const deleteP Contacts
   const deleteContact = async (contact_id) => {
     try {
-      const deleteResponse = await fetch(
-        `http://localhost:5005/db/contacts/${contact_id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const deleteResponse = await fetch(`/db/contacts/${contact_id}`, {
+        method: "DELETE",
+      });
       if (deleteResponse.ok) {
         setContacts(
           contacts.filter((contact) => contact.contact_id !== contact_id)
