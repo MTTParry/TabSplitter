@@ -127,6 +127,7 @@ You'll need to install Node v16 or above.
 ```
 
   i. Copy the information from .env.example into your .env file
+  
   ii. Replace the information in quotes on lines 1, 3, 5, 7, and 8
 
 7.  In the root folder, use the following command to run the dev using nodemon:
