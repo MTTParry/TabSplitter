@@ -126,7 +126,7 @@ You'll need to install Node v16 or above.
    touch .env
   ```
 
-   - Copy the information from .env.example into your .env file
+   - Copy the information from .env.example into your .env file (`Cmd-C` and `Cmd-V`)
 
    - In your .env, replace the information in quotes on lines 1, 3, 5, 7, and 8
 
