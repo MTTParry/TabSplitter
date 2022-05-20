@@ -117,7 +117,9 @@ You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm)
    ```
 5. Set up your .env file. Without this file, the program will not run. You will need:
   1. An api key from SendGrid by Twilio
-  2. An account 
+    1. You will also want to verify an email for sending the emails. (Put your verified email address on line 278 of server.js, replacing the fake email)
+  2. An account with Auth0
+
 
 
 Start the app and view it at <http://localhost:3000> by using:
