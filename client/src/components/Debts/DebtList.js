@@ -12,7 +12,7 @@ function DebtList() {
   const [editDebtById, setEditDebtById] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/db/debts")
+    fetch("/db/debts")
       .then((response) => response.json())
       .then((debtsData) => {
         setDebts(debtsData);
@@ -23,7 +23,7 @@ function DebtList() {
   const deleteDebt = async (debt_id) => {
     try {
       const deleteResponse = await fetch(
-        `http://localhost:5005/db/debts/${debt_id}`,
+        `/db/debts/${debt_id}`,
         {
           method: "DELETE",
         }

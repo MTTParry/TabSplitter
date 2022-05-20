@@ -8,7 +8,7 @@ function BillList() {
   const [billIdToEdit, setBillIdToEdit] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/db/bills_full")
+    fetch("/db/bills_full")
       .then((response) => response.json())
       .then((billData) => {
         setBills(billData);

@@ -39,7 +39,7 @@ function App() {
         <NavBar />
         {/* This makes it so the menu only shows OVER the elements in pageWrapId?? */}
         {/* <NavBurger outerContainerId={'outer-container'} pageWrapId={'page-wrap'} /> */}
-        {user ? (<NavBurger />) : <></>}
+        {user ? <NavBurger /> : <></>}
         <div id="page-wrap">
           <Switch>
             <Route exact path="/" component={Home} />

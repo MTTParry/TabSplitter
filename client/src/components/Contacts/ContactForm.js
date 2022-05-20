@@ -21,7 +21,7 @@ const ContactForm = (props) => {
   //A function to handle the POST request
   const postNewContact = (newContact) => {
     try {
-      return fetch("http://localhost:5005/db/contacts", {
+      return fetch("/db/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newContact),
@@ -41,7 +41,7 @@ const ContactForm = (props) => {
   const updateContactInfo = async (existingContact) => {
     try {
       return fetch(
-        `http://localhost:5005/db/contacts/${existingContact.contact_id}`,
+        `/${existingContact.contact_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

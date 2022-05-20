@@ -5,7 +5,7 @@ const ContactDropDown = (prop) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5005/db/contacts`)
+    fetch(`/db/contacts`)
       .then((response) => response.json())
       .then((contactList) => {
         setContactList(contactList);

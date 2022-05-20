@@ -54,7 +54,7 @@ const DebtForm = (props) => {
   //A function to handle the POST request
   const postNewDebt = (newDebt) => {
     try {
-      return fetch("http://localhost:5005/db/debts", {
+      return fetch("/db/debts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newDebt),
@@ -74,7 +74,7 @@ const DebtForm = (props) => {
   //A function to handle the PUT request
   const updateDebtInfo = async (existingDebt) => {
     try {
-      return fetch(`http://localhost:5005/db/debts/${existingDebt.debt_id}`, {
+      return fetch(`/db/debts/${existingDebt.debt_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(existingDebt),

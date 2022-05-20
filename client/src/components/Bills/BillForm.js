@@ -39,7 +39,7 @@ const BillForm = (props) => {
   //A function to handle the POST request
   const postNewBill = (newBill) => {
     try {
-      return fetch("http://localhost:5005/db/bills", {
+      return fetch("/db/bills", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBill),
@@ -58,7 +58,7 @@ const BillForm = (props) => {
   //A function to handle the PUT request
   const updateBillInfo = async (existingBill) => {
     try {
-      return fetch(`http://localhost:5005/db/bills/${existingBill.bill_id}`, {
+      return fetch(`/db/bills/${existingBill.bill_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(existingBill),

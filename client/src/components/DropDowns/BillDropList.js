@@ -5,7 +5,7 @@ const BillDropDown = (prop) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5005/db/bills`)
+    fetch(`/db/bills`)
       .then((response) => response.json())
       .then((billList) => {
         setBillList(billList);
