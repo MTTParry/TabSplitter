@@ -88,28 +88,37 @@ You'll need to install Node v14 or above. [`nvm`](https://github.com/nvm-sh/nvm)
 
 ### Installation
 
-1. Clone the repo:
+1. In your terminal, go to where you would like the to install this repo. Once there, run the command:
    ```sh
-   git clone https://github.com/MTTParry/TabSplitter.git
+   git clone https://github.com/MTTParry/TabSplitter.git tabSplitter
    ```
+
 2. Install all NPM packages using this in the root directory:
    ```sh
    npm install
    ```
+
+  1. Also install the the express-openid-connect package for Auth0: 
+     ```sh
+     npm --save install express express-openid-connect
+     ```
+
 3. Database setup:
 
-   1. Copy the root example environment file
+   1. Inside of the server folder, run the following command to restore the database dump file:
 
    ```sh
-   cp .env.example .env
+   psql -U postgres -f db.sql
    ```
 
-   2. You can choose to edit `.env` or just use as-is.
-   3. Run the following to setup the database with the seed file:
-
+4. Clean the folder from the owner git by running this command in the root folder:
    ```sh
-   npm run db:init
+   rm -rf .git
    ```
+5. Set up your .env file. Without this file, the program will not run. You will need:
+  1. An api key from SendGrid by Twilio
+  2. 
+
 
 Start the app and view it at <http://localhost:3000> by using:
 
