@@ -8,7 +8,7 @@ const { Pool } = require("pg");
 //   DATABASE_URL_TEST = process.env.LOCAL_DATABASE_URL;
 // }
 const db = new Pool({
-  connectionString: DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_SSL != "false" && {
     rejectUnauthorized: false,
   },
