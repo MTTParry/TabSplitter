@@ -440,7 +440,7 @@ app.get("*", (req, res) => {
   // console.log(req.oidc.isAuthenticated());
   res.sendFile(path.join(REACT_BUILD_DIR, "index.html"));
 });
-
+// WARNING: This was not on heroku1 branch, may be an error
 app.use(express.static(REACT_BUILD_DIR));
 
 // console.log that your server is up and running
