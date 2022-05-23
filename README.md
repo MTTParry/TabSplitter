@@ -136,7 +136,7 @@ You'll need to install Node v16 or above.
   npm run dev
   ```
 
-10. To stop runniing the dev, press `Ctrl-C` while in the terminal running the dev.
+10. To stop running the dev, press `Ctrl-C` while in the terminal running the dev.
 
 #### Set Up React client for `auth0`
 
