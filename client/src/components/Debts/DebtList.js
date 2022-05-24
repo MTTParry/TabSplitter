@@ -22,12 +22,9 @@ function DebtList() {
   //  const deleteP Contacts
   const deleteDebt = async (debt_id) => {
     try {
-      const deleteResponse = await fetch(
-        `/db/debts/${debt_id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const deleteResponse = await fetch(`/db/debts/${debt_id}`, {
+        method: "DELETE",
+      });
       if (deleteResponse.ok) {
         setDebts(debts.filter((debt) => debt.debt_id !== debt_id));
       }
@@ -85,13 +82,9 @@ function DebtList() {
           return (
             <div className="card" key={debt.debt_id}>
               <h2>
-                {debt.first_name} is owed {debt.how_much}, from bill id #
-                {debt.bill_id} on {debt.transaction_date.slice(0, 10)}.
+                {debt.first_name} {debt.last_name} owes {debt.how_much}, from
+                bill id #{debt.bill_id} on {debt.transaction_date.slice(0, 10)}.
               </h2>
-              <p>
-                How they would like to be paid back:{" "}
-                <b>{debt.preferred_payment_method}</b>
-              </p>
               <ul className="debt-info">
                 <li>
                   Subtotal: <b>{debt.subtotal}</b>

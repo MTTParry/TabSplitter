@@ -275,7 +275,7 @@ app.post("/db/debts", cors(), async (req, res) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
     to: `${debtor.email}`, // Change to your recipient
-    from: "replace_this_email@email.com", // Verified sender email
+    from: "col.snake.butler@gmail.com", // Verified sender email
     subject: "You have a new debt to pay",
     text: `Hello ${debtor.first_name} ${debtor.last_name}, You have a new debt to pay! You owe ${payeeInfo.first_name} ${payeeInfo.last_name} $${newDebt.how_much}. ${payeeInfo.first_name} prefers to be paid ${payeeInfo.preferred_payment_method}. Feel free to contact ${payeeInfo.first_name} at ${payeeInfo.email}. Debts Notes: ${newDebt.debt_notes} Bill Notes: ${billInfo.bill_notes} -TabSplitter`,
 
