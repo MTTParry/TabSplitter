@@ -93,7 +93,7 @@ function BillList() {
                   Tax Amount ({bill.tax_rate * 100}%): {bill.tax_total}
                 </li>
                 <li>
-                  Tip Amount ({bill.tip_rate * 100}%): <b>{bill.tip_total}</b>
+                  Tip Amount ({bill.tip_rate}%): <b>{bill.tip_total}</b>
                 </li>
                 <li>
                   Total: <b>{bill.full_total}</b>
