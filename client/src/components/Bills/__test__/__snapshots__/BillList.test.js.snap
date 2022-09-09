@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  className="lists"
+  data-testid="bill_list"
+>
+  <h2>
+     Bill List 
+  </h2>
+  <ul
+    className="Instructions"
+  >
+    This is a list of each time a person covered the bill. This includes:
+    <li>
+      the subtotal
+    </li>
+    <li>
+      tax total
+    </li>
+    <li>
+      the tip (percentage)
+    </li>
+    <li>
+      when the transaction happened
+    </li>
+    <li>
+      who paid for it
+    </li>
+    <li>
+      have they been paid back?
+    </li>
+  </ul>
+</div>
+`;

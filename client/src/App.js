@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App" id="outer-container">
+    <div className="App" id="outer-container" data-testid="app">
       <Router>
         <NavBar />
         {/* This makes it so the menu only shows OVER the elements in pageWrapId?? */}

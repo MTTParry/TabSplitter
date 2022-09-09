@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+// telling the "fake browser" to refresh, 
+// otherwise each call to `render` makes a new `<App>` on screen
+afterEach(cleanup)
+
+it('rendered on screen', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const element = screen.getByTestId("app")
+  expect(element).toBeInTheDocument();
 });
