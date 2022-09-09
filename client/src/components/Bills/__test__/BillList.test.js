@@ -20,10 +20,11 @@ it("matches snapshot", () => {
     expect(tree).toMatchSnapshot()
 })
 
+const mockData = [TestBill]
 // trying to mock fetch - cant figure out rn
 beforeEach(() => {
   jest.spyOn(global, "fetch").mockResolvedValue({
-    json: jest.fn().mockResolvedValue([TestBill]),
+    json: jest.fn().mockResolvedValue(mockData),
   });
 });
 
@@ -38,4 +39,8 @@ it("renders one bill correctly", async () => {
     })
     const element = await screen.findByTestId("bill_list")
     expect(element).toBeInTheDocument();
+
+    // Make sure the list rendered 1 bill for each billr eturned
+    const cardElements = await screen.findAllByTestId(/bill-card/i)
+    expect(cardElements.length).toBe(mockData.length)
 })
