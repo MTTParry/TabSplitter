@@ -28,5 +28,18 @@ it("renders the bill information", () => {
     expectView.toHaveTextContent(TestBill.tip_rate)
     expectView.toHaveTextContent(TestBill.full_total)
     expectView.toHaveTextContent(TestBill.bill_notes)
-    
+
 });
+
+// Exampple Playstation search result - 
+it("correctly displays a PS5 game", () => {
+    // setup a fake search result
+    const fakeSearch = {}
+    // render(<FakeResultCard data={fakeSearch}/>)
+
+    const img = screen.getByTestId("system-logo")
+    expect(img).toHaveAttribute("src","https://cdn-playstation5.jpg")
+
+    const title = screen.getByTestId("game-title")
+    expect(title).toHaveTextContent("Bajo Kazoie 10 - return to schmorgasland")
+})
